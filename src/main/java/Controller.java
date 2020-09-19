@@ -95,9 +95,11 @@ public class Controller {
 
       //STEP 2: Open a connection
       conn = DriverManager.getConnection(Db_Url, User, Pass);
+      //Acknowledged as bug, but nothing can be done here for now.
 
       //STEP 3: Execute a query
       stmt = conn.createStatement();
+      //Identified as bug and is acknowledged.
 
       String insertSql = "INSERT INTO Product(type, manufacturer, name) "
           + "VALUES ( 'AUDIO', 'Apple', 'iPod' )";
