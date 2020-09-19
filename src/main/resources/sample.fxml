@@ -35,12 +35,12 @@
                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                        </rowConstraints>
                         <children>
-                           <TextField GridPane.columnIndex="1" />
+                           <TextField fx:id="productName" GridPane.columnIndex="1" />
                            <Label text="Product Name" />
-                           <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                           <TextField fx:id="manufactureName" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                            <Label text="Manufacturer" GridPane.rowIndex="1" />
                            <Label text="Item Type" GridPane.rowIndex="2" />
-                           <ChoiceBox prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                           <ChoiceBox fx:id="cmbType" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                         </children>
                      </GridPane>
                      <Button fx:id="btnAddProduct" layoutX="107.0" layoutY="100.0" mnemonicParsing="false" onAction="#addProduct" text="Add Product" />
