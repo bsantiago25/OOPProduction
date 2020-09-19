@@ -63,8 +63,8 @@ public class Controller {
       //for loop for combobox. Lists numbers 1-10
     }
 
-    cmbType.getSelectionModel().select(0);
-    //Defaults number to 1
+    cmbType.getSelectionModel().selectFirst();
+    //Defaults number to 1, resource for this code was by prof. Vanselow's website
   }
 
   /**
