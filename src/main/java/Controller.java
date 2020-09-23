@@ -4,15 +4,19 @@
 //Date: 9/19/2020
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TextField;
+import org.h2.command.dml.Select;
 
 public class Controller {
 
@@ -37,8 +41,13 @@ public class Controller {
   @FXML
   private TextField manufactureName;
 
+
   @FXML
-  private ChoiceBox<String> cmbType;
+  private ComboBox<String> cmbProduce;
+
+  @FXML
+  private ChoiceBox<String> chbxType;
+
 
   @FXML
   void addProduct(ActionEvent event) {
@@ -51,7 +60,6 @@ public class Controller {
   void recordProduct(ActionEvent event) {
     System.out.println("Product Recorded");
     //prints out "product recorded" into console
-
   }
 
   /**
@@ -59,11 +67,10 @@ public class Controller {
    */
   public void initialize() {
     for (int i = 1; i <= 10; i++) {
-      cmbType.getItems().add(String.valueOf(i));
+      cmbProduce.getItems().add(String.valueOf(i));
       //for loop for combobox. Lists numbers 1-10
     }
-
-    cmbType.getSelectionModel().selectFirst();
+    cmbProduce.getSelectionModel().selectFirst();
     //Defaults number to 1, resource for this code was by prof. Vanselow's website
   }
 
@@ -75,6 +82,8 @@ public class Controller {
     final String Jdbc_Driver = "org.h2.Driver";
     final String Db_Url = "jdbc:h2:./res/HR";
 
+
+
     //  Database credentials
     final String User = "";
     final String Pass = "";
@@ -83,12 +92,19 @@ public class Controller {
     System.out.println("Product added");
     String product = productName.getText();
     //used to get product name from text box
+
     System.out.println(product);
     // used to print out product
+
     String manufacturer = manufactureName.getText();
     //used to get manufacturer name from textbox
+
+    String type = chbxType.getValue();
+
     System.out.println(manufacturer);
     //used to print out manufacturer
+
+
     try {
       // STEP 1: Register JDBC driver
       Class.forName(Jdbc_Driver);
@@ -98,18 +114,21 @@ public class Controller {
       //Acknowledged as bug, but nothing can be done here for now.
 
       //STEP 3: Execute a query
-      stmt = conn.createStatement();
+      String insertSql;
+
       //Identified as bug and is acknowledged.
 
-      String insertSql = "INSERT INTO Product(type, manufacturer, name) "
-          + "VALUES ( 'AUDIO', 'Apple', 'iPod' )";
+      insertSql = "INSERT INTO Product(type, manufacturer, name) "
+          + "VALUES ( '"+type+"', '"+manufacturer+"', '"+product+"' )";
       //sql statement used to add into product table
 
-      stmt.executeUpdate(insertSql);
+      PreparedStatement prepareStatement = conn.prepareStatement(insertSql);
+
+      prepareStatement.executeUpdate();
       //Used to execute sql statement.
 
       // STEP 4: Clean-up environment
-      stmt.close();
+      prepareStatement.close();
       conn.close();
     } catch (ClassNotFoundException e) {
       e.printStackTrace();
