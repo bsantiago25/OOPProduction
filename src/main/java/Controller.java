@@ -80,7 +80,7 @@ public class Controller {
   public void connectToDb() {
 
     final String Jdbc_Driver = "org.h2.Driver";
-    final String Db_Url = "jdbc:h2:./res/HR";
+    final String Db_Url = "jdbc:h2:./res/PRODUCTDB";
 
 
 
@@ -116,19 +116,23 @@ public class Controller {
       //STEP 3: Execute a query
       String insertSql;
 
-      //Identified as bug and is acknowledged.
+
 
       insertSql = "INSERT INTO Product(type, manufacturer, name) "
-          + "VALUES ( '"+type+"', '"+manufacturer+"', '"+product+"' )";
+          + "VALUES ( ?, ?, ? )";
       //sql statement used to add into product table
 
-      PreparedStatement prepareStatement = conn.prepareStatement(insertSql);
+      PreparedStatement ps = conn.prepareStatement(insertSql);
 
-      prepareStatement.executeUpdate();
+      ps.setString(1,type);
+      ps.setString(2,manufacturer);
+      ps.setString(3,product);
+
+      ps.executeUpdate();
       //Used to execute sql statement.
 
       // STEP 4: Clean-up environment
-      prepareStatement.close();
+      ps.close();
       conn.close();
     } catch (ClassNotFoundException e) {
       e.printStackTrace();

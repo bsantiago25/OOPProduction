@@ -40,7 +40,7 @@
                            <TextField fx:id="manufactureName" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                            <Label text="Manufacturer" GridPane.rowIndex="1" />
                            <Label text="Item Type" GridPane.rowIndex="2" />
-                           <ChoiceBox fx:id="cmbType" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                           <ChoiceBox fx:id="chbxType" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                         </children>
                      </GridPane>
                      <Button fx:id="btnAddProduct" layoutX="107.0" layoutY="100.0" mnemonicParsing="false" onAction="#addProduct" text="Add Product" />
@@ -60,7 +60,7 @@
                   <children>
                      <ListView layoutX="52.0" layoutY="157.0" prefHeight="153.0" prefWidth="320.0" />
                      <Label layoutX="185.0" layoutY="19.0" text="Choose Product" />
-                     <ComboBox layoutX="151.0" layoutY="77.0" prefWidth="150.0" />
+                     <ComboBox fx:id="cmbProduce" layoutX="151.0" layoutY="77.0" prefWidth="150.0" />
                      <Label layoutX="182.0" layoutY="45.0" text="Choose Quantity" />
                      <Button fx:id="btnRecordProduct" layoutX="177.0" layoutY="111.0" mnemonicParsing="false" onAction="#recordProduct" text="Record Product" />
                   </children>
