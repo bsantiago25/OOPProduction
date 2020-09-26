@@ -49,6 +49,8 @@ public class Controller {
   private ChoiceBox<String> chbxType;
 
 
+
+
   @FXML
   void addProduct(ActionEvent event) {
     connectToDb();
@@ -62,6 +64,22 @@ public class Controller {
     //prints out "product recorded" into console
   }
 
+  enum Type {
+    AUDIO("AU"),
+    VISUAL("VI"),
+    AUDIOMOBILE("AM"),
+    VISUALMOBILE("VM");
+
+    private final String code;
+
+    Type(String code)
+    {
+      this.code = code;
+    }
+  }
+
+
+
   /**
    * This method initializes the combobox to make a total types of 1-10.
    */
@@ -72,6 +90,9 @@ public class Controller {
     }
     cmbProduce.getSelectionModel().selectFirst();
     //Defaults number to 1, resource for this code was by prof. Vanselow's website
+  for (Type c : Type.values())
+    chbxType.getItems().add(String.valueOf(c));
+  //Initializes Choicebox for type.
   }
 
   /**
@@ -99,10 +120,17 @@ public class Controller {
     String manufacturer = manufactureName.getText();
     //used to get manufacturer name from textbox
 
-    String type = chbxType.getValue();
-
     System.out.println(manufacturer);
     //used to print out manufacturer
+
+    String type = chbxType.getValue();
+    //used to get type from choice box
+
+    System.out.println(type);
+    //prints out type from choicebox
+
+
+
 
 
     try {
