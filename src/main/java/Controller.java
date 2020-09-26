@@ -78,6 +78,71 @@ public class Controller {
     }
   }
 
+  //interface
+  interface Item{
+     void getID();
+
+     void setName(String name);
+
+     String getName();
+
+     void setManufacturer(String manufacturer);
+
+     String getManufacturer();
+
+  }
+
+
+  //Public abstract
+  public abstract class Product implements Item{
+    int id;
+    String type;
+    String manufacturer;
+    String name;
+
+    public int getId() {
+      return id;
+    }
+
+    @Override
+    public void setName(String name) {
+      this.name = name;
+    }
+
+    @Override
+    public void setManufacturer(String manufacturer) {
+      this.manufacturer = manufacturer;
+    }
+
+    @Override
+    public String getName() {
+      return name;
+    }
+
+    @Override
+    public String getManufacturer() {
+      return manufacturer;
+    }
+
+    public Product(int i, String t, String m, String n){
+      i = id;
+      t = type;
+      m = manufacturer;
+      n = name;
+
+    }
+
+    @Override
+    public String toString() {
+      return "Product{" +
+          "id=" + id +
+          ", type='" + type + '\'' +
+          ", manufacturer='" + manufacturer + '\'' +
+          ", name='" + name + '\'' +
+          '}';
+    }
+  }
+
 
 
   /**
