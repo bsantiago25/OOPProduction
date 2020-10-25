@@ -49,8 +49,6 @@ public class Controller {
   private ChoiceBox<String> chbxType;
 
 
-
-
   @FXML
   void addProduct(ActionEvent event) {
     connectToDb();
@@ -64,87 +62,6 @@ public class Controller {
     //prints out "product recorded" into console
   }
 
-  enum Type {
-    AUDIO("AU"),
-    VISUAL("VI"),
-    AUDIOMOBILE("AM"),
-    VISUALMOBILE("VM");
-
-    private final String code;
-
-    Type(String code)
-    {
-      this.code = code;
-    }
-  }
-
-  //interface
-  interface Item{
-     void getID();
-
-     void setName(String name);
-
-     String getName();
-
-     void setManufacturer(String manufacturer);
-
-     String getManufacturer();
-
-  }
-
-
-  //Public abstract
-  public abstract class Product implements Item{
-    int id;
-    String type;
-    String manufacturer;
-    String name;
-
-    public int getId() {
-      return id;
-    }
-
-    @Override
-    public void setName(String name) {
-      this.name = name;
-    }
-
-    @Override
-    public void setManufacturer(String manufacturer) {
-      this.manufacturer = manufacturer;
-    }
-
-    @Override
-    public String getName() {
-      return name;
-    }
-
-    @Override
-    public String getManufacturer() {
-      return manufacturer;
-    }
-
-    public Product(int i, String t, String m, String n){
-      i = id;
-      t = type;
-      m = manufacturer;
-      n = name;
-
-    }
-
-    @Override
-    public String toString() {
-      return "Product{" +
-          "id=" + id +
-          ", type='" + type + '\'' +
-          ", manufacturer='" + manufacturer + '\'' +
-          ", name='" + name + '\'' +
-          '}';
-    }
-  }
-
-
-
   /**
    * This method initializes the combobox to make a total types of 1-10.
    */
@@ -155,9 +72,6 @@ public class Controller {
     }
     cmbProduce.getSelectionModel().selectFirst();
     //Defaults number to 1, resource for this code was by prof. Vanselow's website
-  for (Type c : Type.values())
-    chbxType.getItems().add(String.valueOf(c));
-  //Initializes Choicebox for type.
   }
 
   /**
