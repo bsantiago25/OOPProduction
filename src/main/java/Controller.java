@@ -72,6 +72,11 @@ public class Controller {
     }
     cmbProduce.getSelectionModel().selectFirst();
     //Defaults number to 1, resource for this code was by prof. Vanselow's website
+    for(ItemType p : ItemType.values())
+    {
+      chbxType.getItems().add(String.valueOf(p.label));
+    }
+
   }
 
   /**
