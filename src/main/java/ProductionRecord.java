@@ -7,13 +7,23 @@ public class ProductionRecord {
   Date dateProduced;
   int count;
 
-  public ProductionRecord(Product productProduced, int i) {
+  public ProductionRecord(int productionNumber, int productID, String serialNumber,
+      Date dateProduced) {
+    this.productionNumber = productionNumber;
     this.productID = productID;
-    productionNumber = 0;
-    serialNumber ="0";
-    dateProduced = new Date();
-    count = i;
+    this.serialNumber = serialNumber;
+    this.dateProduced = dateProduced;
   }
+
+
+  public ProductionRecord(Product productProduced, int i) {
+  this.productID = productID;
+  productionNumber = 0;
+  serialNumber = generateSerialNumber(productProduced);
+  dateProduced = new Date();
+  count = i;
+  }
+
 
 
   public int getProductionNum() {
@@ -48,19 +58,18 @@ public class ProductionRecord {
     this.dateProduced = dateProduced;
   }
 
+  public String generateSerialNumber(Product productProduced)
+  {
+    return productProduced.getManufacturer().substring(0,3) + productProduced.getType().label + "000" + count;
 
-  public ProductionRecord(int productionNumber, int productID, String serialNumber,
-      Date dateProduced) {
-    this.productionNumber = productionNumber;
-    this.productID = productID;
-    this.serialNumber = serialNumber;
-    this.dateProduced = dateProduced;
   }
+
 
   @Override
   public String toString() {
     return "Prod. Num: " + getProductionNum() + " Product ID: " + getProductID() + " Serial Num: "
-        + getSerialNum() + "0000" + count + " Date: " + getProdDate();}
+        + getSerialNum() + " Date: " + getProdDate();
+  }
 
 }
 

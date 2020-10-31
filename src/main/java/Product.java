@@ -1,43 +1,51 @@
-public abstract class Product implements Item {
+public class Product implements Item {
 
-  private int Id;
-  private ItemType Type;
-  private String Manufacturer;
-  private String Name;
+  private int id;
+  private String name;
+  private String manufacturer;
+  private ItemType type;
+
+
 
 
 
   Product(String name, String manufacturer, ItemType type) {
-    this.Name = name;
-    this.Manufacturer = manufacturer;
-    this.Type = type;
+    this.name = name;
+    this.manufacturer = manufacturer;
+    this.type = type;
   }
 
 
   public String toString() {
-    return "Name: " + Name + "\n" + "Manufacturer: " + Manufacturer + "\n" + "Type: "
-        + Type.label;
+    return "Name: " + name + "\n" + "Manufacturer: " + manufacturer + "\n" + "Type: "
+        + type.label;
   }
 
   public int getId() {
-    return Id;
+    return id;
   }
 
   public String getManufacturer() {
-    return Manufacturer;
+    return manufacturer;
   }
 
   public void setManufacturer(String manufacturer) {
-    Manufacturer = manufacturer;
+    this.manufacturer = manufacturer;
   }
 
   public String getName() {
-    return Name;
+    return name;
   }
 
   public void setName(String name) {
-    Name = name;
+    this.name = name;
   }
+
+  public ItemType getType()
+  {
+    return type;
+  }
+
 }
 
 class Widget extends Product implements Item{

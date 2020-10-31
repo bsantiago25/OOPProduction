@@ -20,7 +20,7 @@
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="388.0" prefWidth="462.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
   <children>
     <TabPane>
-      <Tab fx:id="tab1" text="Production Line">
+      <Tab fx:id="tab1" text="Product Line">
             <content>
                <AnchorPane prefHeight="200.0" prefWidth="200.0">
                   <children>
@@ -45,10 +45,12 @@
                      </GridPane>
                      <Button fx:id="btnAddProduct" layoutX="107.0" layoutY="100.0" mnemonicParsing="false" onAction="#addProduct" text="Add Product" />
                      <Label layoutY="125.0" text="Existing Products" />
-                     <TableView layoutX="107.0" layoutY="134.0" prefHeight="205.0" prefWidth="345.0">
+                     <TableView fx:id="productTable" layoutX="107.0" layoutY="134.0" prefHeight="205.0" prefWidth="345.0">
                        <columns>
-                         <TableColumn prefWidth="75.0" text="C1" />
-                         <TableColumn prefWidth="75.0" text="C2" />
+                         <TableColumn fx:id="prodID" prefWidth="75.0" text="Product ID" />
+                         <TableColumn fx:id="prodName" prefWidth="113.33329772949219" text="Product Name" />
+                           <TableColumn fx:id="mfr" prefWidth="75.0" text="Manufacturer" />
+                           <TableColumn fx:id="iType" prefWidth="75.0" text="Item Type" />
                        </columns>
                      </TableView>
                   </children>
@@ -58,11 +60,11 @@
             <content>
                <AnchorPane prefHeight="179.0" prefWidth="231.0">
                   <children>
-                     <ListView layoutX="52.0" layoutY="157.0" prefHeight="153.0" prefWidth="320.0" />
+                     <ListView fx:id="produceView" layoutX="106.0" layoutY="36.0" prefHeight="124.0" prefWidth="239.0" />
                      <Label layoutX="185.0" layoutY="19.0" text="Choose Product" />
-                     <ComboBox fx:id="cmbProduce" layoutX="151.0" layoutY="77.0" prefWidth="150.0" />
-                     <Label layoutX="182.0" layoutY="45.0" text="Choose Quantity" />
-                     <Button fx:id="btnRecordProduct" layoutX="177.0" layoutY="111.0" mnemonicParsing="false" onAction="#recordProduct" text="Record Product" />
+                     <ComboBox fx:id="cmbProduce" layoutX="150.0" layoutY="187.0" prefWidth="150.0" />
+                     <Label layoutX="181.0" layoutY="170.0" text="Choose Quantity" />
+                     <Button fx:id="btnRecordProduct" layoutX="178.0" layoutY="221.0" mnemonicParsing="false" onAction="#recordProduct" text="Record Product" />
                   </children>
                </AnchorPane>
             </content></Tab>
@@ -70,7 +72,7 @@
             <content>
                <AnchorPane prefHeight="200.0" prefWidth="200.0">
                   <children>
-                     <TextArea layoutX="44.0" layoutY="19.0" prefHeight="291.0" prefWidth="349.0" />
+                     <TextArea fx:id="productionLog" layoutX="44.0" layoutY="19.0" prefHeight="291.0" prefWidth="349.0" />
                   </children>
                </AnchorPane>
             </content></Tab>

@@ -17,12 +17,19 @@ public class Main extends Application {
   public void start(Stage primaryStage) throws Exception {
     Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
 
-    Scene scene = new Scene(root, 462, 388);
+    Scene scene = new Scene(root, 500, 470);
 
     primaryStage.setTitle("OOP Production Project");
     primaryStage.setScene(scene);
     primaryStage.show();
+
+    Product testProduct = new Product("Iphone","Apple",ItemType.VISUAL_MOBILE);
+    ProductionRecord testRecord = new ProductionRecord(testProduct,1);
+    System.out.println(testRecord.getSerialNum());//Remember to delete
+
   }
+
+
 
 }
 
