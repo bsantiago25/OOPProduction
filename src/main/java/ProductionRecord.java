@@ -5,7 +5,9 @@ public class ProductionRecord {
   int productID;
   String serialNumber;
   Date dateProduced;
-  int count;
+  String c;
+
+
 
   public ProductionRecord(int productionNumber, int productID, String serialNumber,
       Date dateProduced) {
@@ -19,9 +21,9 @@ public class ProductionRecord {
   public ProductionRecord(Product productProduced, int i) {
   this.productID = productID;
   productionNumber = 0;
-  serialNumber = generateSerialNumber(productProduced);
   dateProduced = new Date();
-  count = i;
+  c = String.format("%04d",i);
+  serialNumber = generateSerialNumber(productProduced);
   }
 
 
@@ -60,8 +62,7 @@ public class ProductionRecord {
 
   public String generateSerialNumber(Product productProduced)
   {
-    return productProduced.getManufacturer().substring(0,3) + productProduced.getType().label + "000" + count;
-
+    return productProduced.getManufacturer().substring(0,3) + productProduced.getType().label + c;
   }
 
 

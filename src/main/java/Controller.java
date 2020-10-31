@@ -87,6 +87,7 @@ public class Controller {
     //calls connectToDb method when add product button is pushed.
 
     System.out.println("Product added");
+    loadProductList();
 
     setupProductLineTable();
     setupProduceListview();
@@ -119,8 +120,9 @@ public class Controller {
     {
       chbxType.getItems().add(String.valueOf(p));
     }
-
     chbxType.getSelectionModel().selectFirst();
+
+
 
   }
 
@@ -200,7 +202,7 @@ public class Controller {
     }
   }
 
-
+    //This method is designed to take info from database and print it out in the product table
     private void loadProductList () throws SQLException {
     String sql = "SELECT * FROM Product";
 
@@ -211,31 +213,27 @@ public class Controller {
       String type = rs.getString("Type");
       String manufacturer = rs.getString("Manufacturer");
 
-      Product productFromDB;
+      Product productFromDB = null;
 
       switch (ItemType.valueOf(type))
       {
         case AUDIO:
           productFromDB = new Product(name, manufacturer, ItemType.AUDIO);
-          productLine.add(productFromDB);
           break;
         case VISUAL:
           productFromDB = new Product(name, manufacturer, ItemType.VISUAL);
-          productLine.add(productFromDB);
           break;
         case AUDIO_MOBILE:
           productFromDB = new Product(name, manufacturer, ItemType.AUDIO_MOBILE);
-          productLine.add(productFromDB);
           break;
         case VISUAL_MOBILE:
           productFromDB = new Product(name, manufacturer, ItemType.VISUAL_MOBILE);
-          productLine.add(productFromDB);
           break;
         default:
           break;
 
       }
-
+      productLine.add(productFromDB);
 
 
     }
@@ -273,6 +271,8 @@ public class Controller {
 //
 //  }
 
+
+    //This table is designed to get text from user input and record them into prodcut table
   public void setupProductLineTable()
   {
     String name = productName.getText();
@@ -294,6 +294,7 @@ public class Controller {
     productTable.setItems(productLine);
   }
 
+  //This method prints out info from product table view into produce tab
   public void setupProduceListview()
   {
     //Shows Product in Produce table

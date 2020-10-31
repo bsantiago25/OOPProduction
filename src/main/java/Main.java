@@ -23,9 +23,6 @@ public class Main extends Application {
     primaryStage.setScene(scene);
     primaryStage.show();
 
-    Product testProduct = new Product("Iphone","Apple",ItemType.VISUAL_MOBILE);
-    ProductionRecord testRecord = new ProductionRecord(testProduct,1);
-    System.out.println(testRecord.getSerialNum());//Remember to delete
 
   }
 
