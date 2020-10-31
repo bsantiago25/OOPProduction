@@ -18,11 +18,11 @@ public class ProductionRecord {
   }
 
 
-  public ProductionRecord(Product productProduced, int i) {
+  public ProductionRecord(Product productProduced, int quantity) {
   this.productID = productID;
   productionNumber = 0;
   dateProduced = new Date();
-  c = String.format("%04d",i);
+  c = String.format("%05d",quantity);
   serialNumber = generateSerialNumber(productProduced);
   }
 

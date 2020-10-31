@@ -87,7 +87,9 @@ public class Controller {
     //calls connectToDb method when add product button is pushed.
 
     System.out.println("Product added");
-    loadProductList();
+
+    //To be added later. Still testing.
+    //loadProductList();
 
     setupProductLineTable();
     setupProduceListview();
@@ -99,8 +101,14 @@ public class Controller {
     System.out.println("Product Recorded");
     //prints out "product recorded" into console
 
-    ObservableList selectedIndices;
-    selectedIndices = produceView.getSelectionModel().getSelectedIndices();
+    //Makes ObservableList Named selectedIndices
+    ObservableList selectedItems;
+    //Makes selectedItems equal to the selected item in the produce table.
+    selectedItems = produceView.getSelectionModel().getSelectedItems();
+    //makes a Production Record Object called products can fills up its parameters with info.
+    ProductionRecord products = new ProductionRecord(0,0,selectedItems.toString(),new Date());
+    //Prints out products onto text area using ProductionRecords tostring method.
+    productionLog.appendText(products.toString());
 
 
   }
@@ -116,14 +124,13 @@ public class Controller {
     cmbProduce.getSelectionModel().selectFirst();
     //Defaults number to 1, resource for this code was by prof. Vanselow's website
 
+    //Cycles through choicebox for Itemtype
     for(ItemType p : ItemType.values())
     {
       chbxType.getItems().add(String.valueOf(p));
     }
+    //Selects first option for itemtype
     chbxType.getSelectionModel().selectFirst();
-
-
-
   }
 
   private Connection conn = null;
@@ -248,7 +255,7 @@ public class Controller {
 
 
 
-
+//For testing purposes
 //  public void testUserInput()
 //  {
 //    String name = productName.getText();
@@ -272,7 +279,7 @@ public class Controller {
 //  }
 
 
-    //This table is designed to get text from user input and record them into prodcut table
+    //This table is designed to get text from user input and record them into product table
   public void setupProductLineTable()
   {
     String name = productName.getText();
@@ -284,6 +291,7 @@ public class Controller {
     String type = chbxType.getValue();
     //used to get type from choice box
 
+    //adds info to observablelist called productline and adds that into tableview
     Product product = new Product(name,manufacturer,ItemType.valueOf(type));
     productLine.add(product);
     prodName.setCellValueFactory(new PropertyValueFactory("name"));
