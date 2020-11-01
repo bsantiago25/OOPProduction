@@ -106,14 +106,11 @@ public class Controller {
     System.out.println("Product Recorded");
     //prints out "product recorded" into console
 
-    //Makes ObservableList Named selectedIndices
-
-    //Makes selectedItems equal to the selected item in the produce table.
-    //selectedItems = produceView.getSelectionModel().getSelectedItems();
-    //Product productProduced = new Product(produceView.getSelectionModel().getSelectedItem().getName(),produceView.getSelectionModel().getSelectedItem().getManufacturer(),produceView.getSelectionModel().getSelectedItem().getType());
-    //Product productProduced = new Product("Ipod","Apple",ItemType.VISUAL_MOBILE);
+    //This takes the selected item on the listview and grabs the info needed to make a new product
+    //record
     Product productProduced = produceView.getSelectionModel().getSelectedItem();
-    //makes a Production Record Object called products can fills up its parameters with info.
+
+    //For loop takes input from combobox and uses that to determine how many products were made.
     for(int j = 0; j <= cmbProduce.getSelectionModel().getSelectedIndex();j++) {
       productProduced.setID(5);
       ProductionRecord productRec = new ProductionRecord(productProduced);
