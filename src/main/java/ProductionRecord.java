@@ -68,7 +68,7 @@ public class ProductionRecord {
 
   public String generateSerialNumber(Product productProduced)
   {
-    return productProduced.getManufacturer().substring(0,3) + productProduced.getType().label + "00000";
+    return productProduced.getManufacturer().substring(0,3) + productProduced.getType().label + "0000" + productID;
   }
 
 
