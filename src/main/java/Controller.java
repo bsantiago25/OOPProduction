@@ -38,6 +38,9 @@ public class Controller {
   private Button btnAddProduct;
 
   @FXML
+  private Button btnRecordProduct;
+
+  @FXML
   private Tab tab2;
 
   @FXML
