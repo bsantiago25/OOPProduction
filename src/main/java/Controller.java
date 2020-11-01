@@ -109,12 +109,15 @@ public class Controller {
     //Makes selectedItems equal to the selected item in the produce table.
     //selectedItems = produceView.getSelectionModel().getSelectedItems();
     //Product productProduced = new Product(produceView.getSelectionModel().getSelectedItem().getName(),produceView.getSelectionModel().getSelectedItem().getManufacturer(),produceView.getSelectionModel().getSelectedItem().getType());
-    Product productProduced = new Product("Ipod","Apple",ItemType.VISUAL_MOBILE);
+    //Product productProduced = new Product("Ipod","Apple",ItemType.VISUAL_MOBILE);
+    Product productProduced = produceView.getSelectionModel().getSelectedItem();
     //makes a Production Record Object called products can fills up its parameters with info.
-    productProduced.setID(5);
-    ProductionRecord productRec = new ProductionRecord(productProduced,7);
-    //Prints out products onto text area using ProductionRecords tostring method.
-    productionLog.appendText(productRec.toString());
+    for(int j = 0; j <= cmbProduce.getSelectionModel().getSelectedIndex();j++) {
+      productProduced.setID(5);
+      ProductionRecord productRec = new ProductionRecord(productProduced);
+      //Prints out products onto text area using ProductionRecords tostring method.
+      productionLog.appendText(productRec.toString());
+    }
 
 
   }

@@ -5,10 +5,11 @@ public class ProductionRecord {
   int productID;
   String serialNumber;
   Date dateProduced;
+  private static int count=0;
   String c;
 
 
-
+    //database constructor
   public ProductionRecord(int productionNumber, int productID, String serialNumber,
       Date dateProduced) {
     this.productionNumber = productionNumber;
@@ -25,10 +26,10 @@ public class ProductionRecord {
   }
 
 
-  public ProductionRecord(Product productProduced, int prodID) {
-  productionNumber = productProduced.getId();
+  public ProductionRecord(Product productProduced) {
+  this.productionNumber = count++;
   dateProduced = new Date();
-  this.productID = prodID;
+  this.productID = productProduced.getId();
   serialNumber = generateSerialNumber(productProduced);
   }
 
@@ -75,7 +76,7 @@ public class ProductionRecord {
   @Override
   public String toString() {
     return "Prod. Num: " + getProductionNum() + " Product ID: " + getProductID() + " Serial Num: "
-        + getSerialNum() + " Date: " + getProdDate();
+        + getSerialNum() + " Date: " + getProdDate() +'\n';
   }
 
 }
