@@ -95,7 +95,9 @@ public class Controller {
     //loadProductList();
 
     setupProductLineTable();
-    setupProduceListview();
+
+    //This prints out info from product table view into produce tab
+    produceView.setItems(productLine);
 
   }
 
@@ -317,12 +319,7 @@ public class Controller {
     productTable.setItems(productLine);
   }
 
-  //This method prints out info from product table view into produce tab
-  public void setupProduceListview()
-  {
-    //Shows Product in Produce table
-    produceView.setItems(productLine);
-  }
+
 
 }
 
