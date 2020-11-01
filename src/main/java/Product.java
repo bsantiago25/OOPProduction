@@ -25,6 +25,8 @@ public class Product implements Item {
     return id;
   }
 
+  public void setID(int id){this.id=id;}
+
   public String getManufacturer() {
     return manufacturer;
   }

@@ -102,13 +102,16 @@ public class Controller {
     //prints out "product recorded" into console
 
     //Makes ObservableList Named selectedIndices
-    ObservableList selectedItems;
+
     //Makes selectedItems equal to the selected item in the produce table.
-    selectedItems = produceView.getSelectionModel().getSelectedItems();
+    //selectedItems = produceView.getSelectionModel().getSelectedItems();
+    //Product productProduced = new Product(produceView.getSelectionModel().getSelectedItem().getName(),produceView.getSelectionModel().getSelectedItem().getManufacturer(),produceView.getSelectionModel().getSelectedItem().getType());
+    Product productProduced = new Product("Ipod","Apple",ItemType.VISUAL_MOBILE);
     //makes a Production Record Object called products can fills up its parameters with info.
-    ProductionRecord products = new ProductionRecord(0,0,selectedItems.toString(),new Date());
+    productProduced.setID(5);
+    ProductionRecord productRec = new ProductionRecord(productProduced,7);
     //Prints out products onto text area using ProductionRecords tostring method.
-    productionLog.appendText(products.toString());
+    productionLog.appendText(productRec.toString());
 
 
   }
@@ -294,8 +297,14 @@ public class Controller {
     //adds info to observablelist called productline and adds that into tableview
     Product product = new Product(name,manufacturer,ItemType.valueOf(type));
     productLine.add(product);
+
+    //column for product name.
     prodName.setCellValueFactory(new PropertyValueFactory("name"));
+
+    //column for manufacturer
     mfr.setCellValueFactory(new PropertyValueFactory("manufacturer"));
+
+    //Column for item type
     iType.setCellValueFactory(new PropertyValueFactory("type"));
 
     //adding products from observableList to tableView

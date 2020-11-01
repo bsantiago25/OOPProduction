@@ -17,12 +17,18 @@ public class ProductionRecord {
     this.dateProduced = dateProduced;
   }
 
+  public ProductionRecord(int productID)
+  {
+    productionNumber=0;
+    serialNumber = "0";
+    dateProduced = new Date();
+  }
 
-  public ProductionRecord(Product productProduced, int quantity) {
-  this.productID = productID;
-  productionNumber = 0;
+
+  public ProductionRecord(Product productProduced, int prodID) {
+  productionNumber = productProduced.getId();
   dateProduced = new Date();
-  c = String.format("%05d",quantity);
+  this.productID = prodID;
   serialNumber = generateSerialNumber(productProduced);
   }
 
@@ -62,7 +68,7 @@ public class ProductionRecord {
 
   public String generateSerialNumber(Product productProduced)
   {
-    return productProduced.getManufacturer().substring(0,3) + productProduced.getType().label + c;
+    return productProduced.getManufacturer().substring(0,3) + productProduced.getType().label + "00000";
   }
 
 
