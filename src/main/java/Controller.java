@@ -3,16 +3,20 @@
 //most of the coding for this program.
 //Date: 9/19/2020
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Date;
+import java.sql.Timestamp;
+import java.util.ArrayList;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
@@ -82,6 +86,16 @@ public class Controller {
   //Observable List
   ObservableList<Product> productLine = FXCollections.observableArrayList();
 
+  ArrayList<ProductionRecord> productionRun = new ArrayList<>();
+
+  final String Jdbc_Driver = "org.h2.Driver";
+  final String Db_Url = "jdbc:h2:./res/PRODUCTDB";
+
+  //  Database credentials
+  final String User = "";
+  final String Pass = "";
+
+
 
 
   @FXML
@@ -90,19 +104,30 @@ public class Controller {
     //calls connectToDb method when add product button is pushed.
 
     System.out.println("Product added");
+    String name = productName.getText();
+    //used to get product name from text box
 
-    //To be added later. Still testing.
-    //loadProductList();
+    String manufacturer = manufactureName.getText();
+    //used to get manufacturer name from textbox
 
-    setupProductLineTable();
+    String type = chbxType.getValue();
+    //used to get type from choice box
 
-    //This prints out info from product table view into produce tab
+    //adds info to observablelist called productline and adds that into tableview
+    Product product = new Product(name,manufacturer,ItemType.valueOf(type));
+
+
+    productLine.add(product);
+
     produceView.setItems(productLine);
+    //This prints out info from product table view into produce tab
 
+    loadProductList();
+    setupProductLineTable();
   }
 
   @FXML
-  void recordProduct(ActionEvent event) {
+  void recordProduct(ActionEvent event) throws SQLException {
     System.out.println("Product Recorded");
     //prints out "product recorded" into console
 
@@ -110,13 +135,25 @@ public class Controller {
     //record
     Product productProduced = produceView.getSelectionModel().getSelectedItem();
 
+
+
     //For loop takes input from combobox and uses that to determine how many products were made.
-    for(int j = 0; j <= cmbProduce.getSelectionModel().getSelectedIndex();j++) {
-      productProduced.setID(5);
-      ProductionRecord productRec = new ProductionRecord(productProduced);
-      //Prints out products onto text area using ProductionRecords tostring method.
-      productionLog.appendText(productRec.toString());
+    try {
+      for (int j = 0; j <= cmbProduce.getSelectionModel().getSelectedIndex(); j++) {
+       //Prints out products onto text area using ProductionRecords tostring method.
+        ProductionRecord productRec = new ProductionRecord(productProduced);
+        productionRun.add(productRec);
+
+      }
+      addToProductionDB();
+      productionRun.clear();
+    }catch(NullPointerException e)
+    {
+      System.out.println("Please pick product");
     }
+    loadProductionDB();
+
+
 
 
   }
@@ -124,7 +161,8 @@ public class Controller {
   /**
    * This method initializes the combobox to make a total types of 1-10.
    */
-  public void initialize() {
+  public void initialize() throws SQLException {
+
     for (int i = 1; i <= 10; i++) {
       cmbProduce.getItems().add(String.valueOf(i));
       //for loop for combobox. Lists numbers 1-10
@@ -133,33 +171,31 @@ public class Controller {
     //Defaults number to 1, resource for this code was by prof. Vanselow's website
 
     //Cycles through choicebox for Itemtype
-    for(ItemType p : ItemType.values())
-    {
+    for (ItemType p : ItemType.values()) {
       chbxType.getItems().add(String.valueOf(p));
     }
     //Selects first option for itemtype
     chbxType.getSelectionModel().selectFirst();
+
+    loadProductList();
+    setupProductLineTable();
+    produceView.setItems(productLine);
+
+
   }
 
   private Connection conn = null;
   private Statement stmt = null;
 
 
-
-
   /**
    * This method initializes the program to connect to database and populate it with data.
    */
+
+
   public void connectToDb() {
 
-    final String Jdbc_Driver = "org.h2.Driver";
-    final String Db_Url = "jdbc:h2:./res/PRODUCTDB";
 
-
-
-    //  Database credentials
-    final String User = "";
-    final String Pass = "";
 
     String product = productName.getText();
     //used to get product name from text box
@@ -179,29 +215,22 @@ public class Controller {
     System.out.println(type);
     //prints out type from choicebox
 
-
     try {
       // STEP 1: Register JDBC driver
       Class.forName(Jdbc_Driver);
 
       //STEP 2: Open a connection
       conn = DriverManager.getConnection(Db_Url, User, Pass);
-      //Acknowledged as bug, but nothing can be done here for now.
-      stmt = conn.createStatement();
-      //STEP 3: Execute a query
-      String insertSql;
 
-
-
-      insertSql = "INSERT INTO Product(type, manufacturer, name) "
+      String insertSql = "INSERT INTO PRODUCT(type, manufacturer, name) "
           + "VALUES ( ?, ?, ? )";
       //sql statement used to add into product table
 
       PreparedStatement ps = conn.prepareStatement(insertSql);
 
-      ps.setString(1,type);
-      ps.setString(2,manufacturer);
-      ps.setString(3,product);
+      ps.setString(1, type);
+      ps.setString(2, manufacturer);
+      ps.setString(3, product);
 
       ps.executeUpdate();
       //Used to execute sql statement.
@@ -217,92 +246,126 @@ public class Controller {
     }
   }
 
-    //This method is designed to take info from database and print it out in the product table
-    private void loadProductList () throws SQLException {
-    String sql = "SELECT * FROM Product";
+  private void loadProductList() {
+    try {
+      //STEP 1: Open a connection
+      conn = DriverManager.getConnection(Db_Url, User, Pass);
+      //Create statement
+      stmt = conn.createStatement();
+      String reader = "SELECT * FROM Product";
+      //STEP 3: Execute a query
+      ResultSet looker = stmt.executeQuery(reader);
+      //Clears Tableview to input new Table
+      produceView.getItems().clear();
+      while (looker.next()) {
+        // these lines correspond to the database table columns
+        //Reads from database
+        int id = looker.getInt("id");
+        String name = looker.getString("name");
+        String type = looker.getString("type");
+        String manufacturer = looker.getString("manufacturer");
+        // create Product Object
+       Product productFromDb = new Product(id,name, manufacturer, ItemType.valueOf(type));
 
-    ResultSet rs = stmt.executeQuery(sql);
+       productLine.add(productFromDb);
+      }
+      looker.close();
+    } catch (SQLException se) {
+      se.printStackTrace();
+      Alert a = new Alert(AlertType.ERROR);
 
-    while (rs.next()) {
-      String name = rs.getString("Name");
-      String type = rs.getString("Type");
-      String manufacturer = rs.getString("Manufacturer");
+      a.show();
+    } catch (Exception e) {
+      e.printStackTrace();
+      System.out.println("This is where the error is");
+    }
 
-      Product productFromDB = null;
+  }
 
-      switch (ItemType.valueOf(type))
-      {
-        case AUDIO:
-          productFromDB = new Product(name, manufacturer, ItemType.AUDIO);
-          break;
-        case VISUAL:
-          productFromDB = new Product(name, manufacturer, ItemType.VISUAL);
-          break;
-        case AUDIO_MOBILE:
-          productFromDB = new Product(name, manufacturer, ItemType.AUDIO_MOBILE);
-          break;
-        case VISUAL_MOBILE:
-          productFromDB = new Product(name, manufacturer, ItemType.VISUAL_MOBILE);
-          break;
-        default:
-          break;
+  public void loadProductionDB()
+  {
+    try {
+      //STEP 1: Open a connection
+      conn = DriverManager.getConnection(Db_Url, User, Pass);
+      //Create statement
+      stmt = conn.createStatement();
+      String reader2 = "SELECT * FROM Productionrecord";
+      //STEP 3: Execute a query
+      ResultSet looker2 = stmt.executeQuery(reader2);
+      //Clears Tableview to input new Table
+      productionLog.clear();
+      while (looker2.next()) {
+        // these lines correspond to the database table columns
+        //Reads from database
+        int pNum = looker2.getInt("production_num");
+        int pId = looker2.getInt("product_id");
+        String sNum = looker2.getString("serial_num");
+        Date dProduced = looker2.getDate("date_produced");
+        // create Product Object
+        ProductionRecord productionRecordFromDb = new ProductionRecord(pNum,pId,sNum,dProduced);
+        productionLog.appendText(productionRecordFromDb.toString());
 
       }
-      productLine.add(productFromDB);
+      looker2.close();
+    } catch (SQLException se) {
+      se.printStackTrace();
+      Alert a = new Alert(AlertType.ERROR);
 
-
+      a.show();
+    } catch (Exception e) {
+      e.printStackTrace();
+      System.out.println("This is where the error is");
     }
-      prodName.setCellValueFactory(new PropertyValueFactory("name"));
-      mfr.setCellValueFactory(new PropertyValueFactory("manufacturer"));
-      iType.setCellValueFactory(new PropertyValueFactory("type"));
-      productTable.setItems(productLine);
-    rs.close();
-    conn.close();
   }
 
 
+  public void addToProductionDB()
+  {
+    try {
+      // STEP 1: Register JDBC driver
+      Class.forName(Jdbc_Driver);
+
+      //STEP 2: Open a connection
+      conn = DriverManager.getConnection(Db_Url, User, Pass);
+      //Acknowledged as bug, but nothing can be done here for now.
+      stmt = conn.createStatement();
+      //STEP 3: Execute a query
+      String insertSql;
+    for (int i = 0; i < productionRun.size();i++) {
+
+      insertSql = "INSERT INTO ProductionRecord(production_num,product_id,serial_num,date_produced) "
+          + "VALUES (?, ?, ?, ? )";
+      //sql statement used to add into product table
+      java.sql.Date sDate = new java.sql.Date(productionRun.get(i).getProdDate().getTime());
+
+      PreparedStatement ps = conn.prepareStatement(insertSql);
 
 
-//For testing purposes
-//  public void testUserInput()
-//  {
-//    String name = productName.getText();
-//    //used to get product name from text box
-//
-//    String manufacturer = manufactureName.getText();
-//    //used to get manufacturer name from textbox
-//
-//    String type = chbxType.getValue();
-//    //used to get type from choice box
-//
-//    Product product = new Product(name,manufacturer,ItemType.valueOf(type));
-//    productLine.add(product);
-//    prodName.setCellValueFactory(new PropertyValueFactory("name"));
-//    mfr.setCellValueFactory(new PropertyValueFactory("manufacturer"));
-//    iType.setCellValueFactory(new PropertyValueFactory("type"));
-//    productTable.setItems(productLine);
-//
-//
-//
-//  }
+      ps.setInt(1, productionRun.get(i).getProductionNum());
+      ps.setInt(2,productionRun.get(i).getProductID());
+      ps.setString(3, productionRun.get(i).getSerialNum());
+      ps.setDate(4, sDate);
 
+      ps.executeUpdate();
+      //Used to execute sql statement.
 
-    //This table is designed to get text from user input and record them into product table
+      // STEP 4: Clean-up environment
+      ps.close();
+
+    }
+    } catch (ClassNotFoundException e) {
+      e.printStackTrace();
+
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+  }
+
+  //This table is designed to get text from user input and record them into product table
   public void setupProductLineTable()
   {
-    String name = productName.getText();
-    //used to get product name from text box
 
-    String manufacturer = manufactureName.getText();
-    //used to get manufacturer name from textbox
-
-    String type = chbxType.getValue();
-    //used to get type from choice box
-
-    //adds info to observablelist called productline and adds that into tableview
-    Product product = new Product(name,manufacturer,ItemType.valueOf(type));
-    productLine.add(product);
-
+    prodID.setCellValueFactory(new PropertyValueFactory("id"));
     //column for product name.
     prodName.setCellValueFactory(new PropertyValueFactory("name"));
 

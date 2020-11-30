@@ -5,7 +5,7 @@ public class ProductionRecord {
   int productID;
   String serialNumber;
   Date dateProduced;
-  private static int count=0;
+  private static int count=1;
   String c;
 
 
@@ -69,7 +69,7 @@ public class ProductionRecord {
 
   public String generateSerialNumber(Product productProduced)
   {
-    return productProduced.getManufacturer().substring(0,3) + productProduced.getType().label + "0000" + productID;
+    return productProduced.getManufacturer().substring(0,3).toUpperCase() + productProduced.getType().label + "0000" + productID;
   }
 
 

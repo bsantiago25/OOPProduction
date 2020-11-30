@@ -15,6 +15,12 @@ public class Product implements Item {
     this.type = type;
   }
 
+  Product(int id, String name, String manufacturer, ItemType type) {
+    this.id = id;
+    this.name = name;
+    this.manufacturer = manufacturer;
+    this.type = type;
+  }
 
   public String toString() {
     return "Name: " + name + "\n" + "Manufacturer: " + manufacturer + "\n" + "Type: "
