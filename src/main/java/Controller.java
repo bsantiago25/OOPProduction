@@ -88,6 +88,12 @@ public class Controller {
 
   ArrayList<ProductionRecord> productionRun = new ArrayList<>();
 
+  ArrayList<ProductionRecord> productionLog1 = new ArrayList<>();
+
+  ArrayList<ProductionRecord> productionLog2 = new ArrayList<>();
+
+
+
   final String Jdbc_Driver = "org.h2.Driver";
   final String Db_Url = "jdbc:h2:./res/PRODUCTDB";
 
@@ -96,11 +102,9 @@ public class Controller {
   final String Pass = "";
 
 
-
-
   @FXML
   void addProduct(ActionEvent event) throws SQLException {
-    connectToDb();
+
     //calls connectToDb method when add product button is pushed.
 
     System.out.println("Product added");
@@ -114,16 +118,15 @@ public class Controller {
     //used to get type from choice box
 
     //adds info to observablelist called productline and adds that into tableview
-    Product product = new Product(name,manufacturer,ItemType.valueOf(type));
-
+    Product product = new Product(name, manufacturer, ItemType.valueOf(type));
 
     productLine.add(product);
-
+    addToProductDB();
     produceView.setItems(productLine);
     //This prints out info from product table view into produce tab
 
     loadProductList();
-    setupProductLineTable();
+
   }
 
   @FXML
@@ -135,25 +138,43 @@ public class Controller {
     //record
     Product productProduced = produceView.getSelectionModel().getSelectedItem();
 
+    int tick = 1;
 
+    for (ProductionRecord productionRecord : productionLog2) {
+
+      for (int k = 0; k < productLine.toArray().length; k++) {
+
+        if (productLine.get(k).getId() == productionRecord.getProductID()
+            && productProduced.getName() == productLine.get(k).getName()) {
+          tick++;
+        }
+
+      }
+    }
+
+
+
+
+
+
+
+
+    int quantity = Integer.parseInt(cmbProduce.getValue());
 
     //For loop takes input from combobox and uses that to determine how many products were made.
     try {
-      for (int j = 0; j <= cmbProduce.getSelectionModel().getSelectedIndex(); j++) {
-       //Prints out products onto text area using ProductionRecords tostring method.
-        ProductionRecord productRec = new ProductionRecord(productProduced);
+      for (int j = tick; j < tick + quantity; j++) {
+        //Prints out products onto text area using ProductionRecords tostring method.
+        ProductionRecord productRec = new ProductionRecord(productProduced,j);
         productionRun.add(productRec);
 
       }
       addToProductionDB();
       productionRun.clear();
-    }catch(NullPointerException e)
-    {
+    } catch (NullPointerException e) {
       System.out.println("Please pick product");
     }
     loadProductionDB();
-
-
 
 
   }
@@ -167,6 +188,7 @@ public class Controller {
       cmbProduce.getItems().add(String.valueOf(i));
       //for loop for combobox. Lists numbers 1-10
     }
+    cmbProduce.setEditable(true);
     cmbProduce.getSelectionModel().selectFirst();
     //Defaults number to 1, resource for this code was by prof. Vanselow's website
 
@@ -180,6 +202,7 @@ public class Controller {
     loadProductList();
     setupProductLineTable();
     produceView.setItems(productLine);
+    loadProductionDB();
 
 
   }
@@ -193,9 +216,7 @@ public class Controller {
    */
 
 
-  public void connectToDb() {
-
-
+  public void addToProductDB() {
 
     String product = productName.getText();
     //used to get product name from text box
@@ -265,9 +286,9 @@ public class Controller {
         String type = looker.getString("type");
         String manufacturer = looker.getString("manufacturer");
         // create Product Object
-       Product productFromDb = new Product(id,name, manufacturer, ItemType.valueOf(type));
+        Product productFromDb = new Product(id, name, manufacturer, ItemType.valueOf(type));
 
-       productLine.add(productFromDb);
+        productLine.add(productFromDb);
       }
       looker.close();
     } catch (SQLException se) {
@@ -282,8 +303,7 @@ public class Controller {
 
   }
 
-  public void loadProductionDB()
-  {
+  public void loadProductionDB() {
     try {
       //STEP 1: Open a connection
       conn = DriverManager.getConnection(Db_Url, User, Pass);
@@ -292,8 +312,9 @@ public class Controller {
       String reader2 = "SELECT * FROM Productionrecord";
       //STEP 3: Execute a query
       ResultSet looker2 = stmt.executeQuery(reader2);
+      productionLog2.clear();
       //Clears Tableview to input new Table
-      productionLog.clear();
+
       while (looker2.next()) {
         // these lines correspond to the database table columns
         //Reads from database
@@ -302,25 +323,23 @@ public class Controller {
         String sNum = looker2.getString("serial_num");
         Date dProduced = looker2.getDate("date_produced");
         // create Product Object
-        ProductionRecord productionRecordFromDb = new ProductionRecord(pNum,pId,sNum,dProduced);
-        productionLog.appendText(productionRecordFromDb.toString());
-
+        ProductionRecord productionRecordFromDb = new ProductionRecord(pNum, pId, sNum, dProduced);
+        productionLog1.add(productionRecordFromDb);
+        productionLog2.add(productionRecordFromDb);
       }
+      productionLog.clear();
+      showProduction();
       looker2.close();
     } catch (SQLException se) {
       se.printStackTrace();
       Alert a = new Alert(AlertType.ERROR);
 
       a.show();
-    } catch (Exception e) {
-      e.printStackTrace();
-      System.out.println("This is where the error is");
     }
   }
 
 
-  public void addToProductionDB()
-  {
+  public void addToProductionDB() {
     try {
       // STEP 1: Register JDBC driver
       Class.forName(Jdbc_Driver);
@@ -331,28 +350,28 @@ public class Controller {
       stmt = conn.createStatement();
       //STEP 3: Execute a query
       String insertSql;
-    for (int i = 0; i < productionRun.size();i++) {
+      for (int i = 0; i < productionRun.size(); i++) {
 
-      insertSql = "INSERT INTO ProductionRecord(production_num,product_id,serial_num,date_produced) "
-          + "VALUES (?, ?, ?, ? )";
-      //sql statement used to add into product table
-      java.sql.Date sDate = new java.sql.Date(productionRun.get(i).getProdDate().getTime());
+        insertSql = "INSERT INTO ProductionRecord(product_id,serial_num,date_produced) "
+            + "VALUES (?, ?, ? )";
+        //sql statement used to add into product table
+        java.sql.Date sDate = new java.sql.Date(productionRun.get(i).getProdDate().getTime());
 
-      PreparedStatement ps = conn.prepareStatement(insertSql);
+        PreparedStatement ps = conn.prepareStatement(insertSql);
 
+        //To Do: Work on serial Number.
 
-      ps.setInt(1, productionRun.get(i).getProductionNum());
-      ps.setInt(2,productionRun.get(i).getProductID());
-      ps.setString(3, productionRun.get(i).getSerialNum());
-      ps.setDate(4, sDate);
+        ps.setInt(1, productionRun.get(i).getProductID());
+        ps.setString(2, productionRun.get(i).getSerialNum());
+        ps.setDate(3, sDate);
 
-      ps.executeUpdate();
-      //Used to execute sql statement.
+        ps.executeUpdate();
+        //Used to execute sql statement.
 
-      // STEP 4: Clean-up environment
-      ps.close();
+        // STEP 4: Clean-up environment
+        ps.close();
 
-    }
+      }
     } catch (ClassNotFoundException e) {
       e.printStackTrace();
 
@@ -362,8 +381,7 @@ public class Controller {
   }
 
   //This table is designed to get text from user input and record them into product table
-  public void setupProductLineTable()
-  {
+  public void setupProductLineTable() {
 
     prodID.setCellValueFactory(new PropertyValueFactory("id"));
     //column for product name.
@@ -379,8 +397,29 @@ public class Controller {
     productTable.setItems(productLine);
   }
 
+  public void showProduction() {
 
 
+    for (int j = 0; j < productionLog1.size(); j++) {
+
+      for (int k = 0; k < productLine.toArray().length; k++) {
+
+        if (productLine.get(k).getId() == productionLog1.get(j).getProductID())
+
+        productionLog.appendText(
+            "Prod. Num: " + productionLog1.get(j).productionNumber + " Product Name: "
+                + productLine.get(k).getName() +
+                " Serial Num: " + productionLog1.get(j).getSerialNum() + " Date: "
+                + productionLog1
+                .get(j).getProdDate() + '\n');
+        {
+
+        }
+      }
+    }
+    productionLog1.clear();
+    //Deletes the productionLog1 list so it doesnt duplicate list again.
+  }
 }
 
 

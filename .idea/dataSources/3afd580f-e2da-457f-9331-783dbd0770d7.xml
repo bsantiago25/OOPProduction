@@ -172,14 +172,14 @@
     <collation id="160" parent="2" name="UKRAINIAN_UKRAINE"/>
     <collation id="161" parent="2" name="VIETNAMESE"/>
     <collation id="162" parent="2" name="VIETNAMESE_VIETNAM"/>
-    <sequence id="163" parent="4" name="SYSTEM_SEQUENCE_0BD903B9_860D_41DF_9B66_A4F3FAE645E1">
-      <ObjectId>9</ObjectId>
+    <sequence id="163" parent="4" name="SYSTEM_SEQUENCE_62531258_134F_4440_8654_C174AE784560">
+      <ObjectId>4</ObjectId>
       <NameSurrogate>1</NameSurrogate>
       <CacheSize>32</CacheSize>
       <AutoCreated>1</AutoCreated>
     </sequence>
-    <sequence id="164" parent="4" name="SYSTEM_SEQUENCE_62531258_134F_4440_8654_C174AE784560">
-      <ObjectId>4</ObjectId>
+    <sequence id="164" parent="4" name="SYSTEM_SEQUENCE_A7858C7E_B9BD_4760_8300_6784AF88496B">
+      <ObjectId>9</ObjectId>
       <NameSurrogate>1</NameSurrogate>
       <CacheSize>32</CacheSize>
       <AutoCreated>1</AutoCreated>

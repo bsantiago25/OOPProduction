@@ -5,8 +5,10 @@ public class ProductionRecord {
   int productID;
   String serialNumber;
   Date dateProduced;
-  private static int count=1;
   String c;
+
+
+
 
 
     //database constructor
@@ -16,23 +18,19 @@ public class ProductionRecord {
     this.productID = productID;
     this.serialNumber = serialNumber;
     this.dateProduced = dateProduced;
+
   }
 
-  public ProductionRecord(int productID)
-  {
-    productionNumber=0;
-    serialNumber = "0";
+
+
+
+  public ProductionRecord(Product productProduced, int quantity) {
+    this.productID = productProduced.getId();
+    productionNumber = 0;
     dateProduced = new Date();
+    c = String.format("%05d",quantity);
+    serialNumber = generateSerialNumber(productProduced);
   }
-
-
-  public ProductionRecord(Product productProduced) {
-  this.productionNumber = count++;
-  dateProduced = new Date();
-  this.productID = productProduced.getId();
-  serialNumber = generateSerialNumber(productProduced);
-  }
-
 
 
   public int getProductionNum() {
@@ -69,7 +67,8 @@ public class ProductionRecord {
 
   public String generateSerialNumber(Product productProduced)
   {
-    return productProduced.getManufacturer().substring(0,3).toUpperCase() + productProduced.getType().label + "0000" + productID;
+
+    return productProduced.getManufacturer().substring(0,3).toUpperCase() + productProduced.getType().label + c;
   }
 
 

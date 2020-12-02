@@ -62,7 +62,7 @@
                   <children>
                      <ListView fx:id="produceView" layoutX="106.0" layoutY="36.0" prefHeight="124.0" prefWidth="239.0" />
                      <Label layoutX="185.0" layoutY="19.0" text="Choose Product" />
-                     <ComboBox fx:id="cmbProduce" layoutX="150.0" layoutY="187.0" prefWidth="150.0" />
+                     <ComboBox fx:id="cmbProduce" editable="true" layoutX="150.0" layoutY="187.0" prefWidth="150.0" />
                      <Label layoutX="181.0" layoutY="170.0" text="Choose Quantity" />
                      <Button fx:id="btnRecordProduct" layoutX="178.0" layoutY="221.0" mnemonicParsing="false" onAction="#recordProduct" text="Record Product" />
                   </children>
