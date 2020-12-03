@@ -1,7 +1,8 @@
 public interface ScreenSpec {
 
-  public String getResolution();
-  public int getRefreshRate();
-  public int getResponseTime();
+  int getRefreshRate();
+  int getResponseTime();
+  String getResolution();
+
 
 }

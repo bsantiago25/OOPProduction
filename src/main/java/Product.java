@@ -3,7 +3,7 @@ public class Product implements Item {
   private int id;
   private String name;
   private String manufacturer;
-  private ItemType type;
+  private final ItemType type;
 
 
 
@@ -31,7 +31,9 @@ public class Product implements Item {
     return id;
   }
 
-  public void setID(int id){this.id=id;}
+  public void setId(int id) {
+    this.id = id;
+  }
 
   public String getManufacturer() {
     return manufacturer;
@@ -49,18 +51,12 @@ public class Product implements Item {
     this.name = name;
   }
 
-  public ItemType getType()
-  {
+  public ItemType getType() {
     return type;
   }
 
 }
 
-class Widget extends Product implements Item{
-
-  Widget(String name, String manufacturer, ItemType type) {
-    super(name, manufacturer, type);
-  }
 
 
-}
+

@@ -172,23 +172,23 @@
     <collation id="160" parent="2" name="UKRAINIAN_UKRAINE"/>
     <collation id="161" parent="2" name="VIETNAMESE"/>
     <collation id="162" parent="2" name="VIETNAMESE_VIETNAM"/>
-    <sequence id="163" parent="4" name="SYSTEM_SEQUENCE_62531258_134F_4440_8654_C174AE784560">
+    <sequence id="163" parent="4" name="SYSTEM_SEQUENCE_0F89970B_871A_47C1_93F8_58BE6BCF7D44">
       <ObjectId>4</ObjectId>
       <NameSurrogate>1</NameSurrogate>
       <CacheSize>32</CacheSize>
       <AutoCreated>1</AutoCreated>
     </sequence>
-    <sequence id="164" parent="4" name="SYSTEM_SEQUENCE_A7858C7E_B9BD_4760_8300_6784AF88496B">
-      <ObjectId>9</ObjectId>
+    <sequence id="164" parent="4" name="SYSTEM_SEQUENCE_5BDDA818_4796_4E31_BF17_6DF1EFC4723C">
+      <ObjectId>6</ObjectId>
       <NameSurrogate>1</NameSurrogate>
       <CacheSize>32</CacheSize>
       <AutoCreated>1</AutoCreated>
     </sequence>
     <table id="165" parent="4" name="PRODUCT">
-      <ObjectId>3</ObjectId>
+      <ObjectId>5</ObjectId>
     </table>
     <table id="166" parent="4" name="PRODUCTIONRECORD">
-      <ObjectId>8</ObjectId>
+      <ObjectId>3</ObjectId>
     </table>
     <column id="167" parent="165" name="ID">
       <Position>1</Position>
@@ -208,39 +208,21 @@
       <Position>4</Position>
       <DataType>VARCHAR|0s</DataType>
     </column>
-    <index id="171" parent="165" name="PRIMARY_KEY_1">
-      <ObjectId>6</ObjectId>
-      <NameSurrogate>1</NameSurrogate>
-      <SourceTextLength>71</SourceTextLength>
-      <ColNames>ID</ColNames>
-      <Unique>1</Unique>
-      <AutoCreated>1</AutoCreated>
-    </index>
-    <index id="172" parent="165" name="PRODUCT_ID_UINDEX">
-      <ObjectId>5</ObjectId>
-      <SourceTextLength>76</SourceTextLength>
-      <ColNames>ID</ColNames>
-      <Unique>1</Unique>
-    </index>
-    <key id="173" parent="165" name="PRODUCT_PK">
-      <ColNames>ID</ColNames>
-      <Primary>1</Primary>
-    </key>
-    <column id="174" parent="166" name="PRODUCTION_NUM">
+    <column id="171" parent="166" name="PRODUCTION_NUM">
       <Position>1</Position>
       <DataType>INT|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="175" parent="166" name="PRODUCT_ID">
+    <column id="172" parent="166" name="PRODUCT_ID">
       <Position>2</Position>
       <DataType>INT|0s</DataType>
     </column>
-    <column id="176" parent="166" name="SERIAL_NUM">
+    <column id="173" parent="166" name="SERIAL_NUM">
       <Position>3</Position>
       <DataType>VARCHAR|0s</DataType>
     </column>
-    <column id="177" parent="166" name="DATE_PRODUCED">
+    <column id="174" parent="166" name="DATE_PRODUCED">
       <Position>4</Position>
       <DataType>DATETIME|0s</DataType>
     </column>

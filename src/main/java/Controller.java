@@ -2,6 +2,7 @@
 //This file is the controller.java file and contains and contains all SQL codes and
 //most of the coding for this program.
 //Date: 9/19/2020
+
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
@@ -9,7 +10,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -17,38 +17,17 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.control.Tab;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import org.h2.command.dml.Select;
+
 
 public class Controller {
-
-  @FXML
-  private Label lblOutput;
-
-  @FXML
-  private Tab tab1;
-
-  @FXML
-  private Button btnAddProduct;
-
-  @FXML
-  private Button btnRecordProduct;
-
-  @FXML
-  private Tab tab2;
-
-  @FXML
-  private Tab tab3;
 
   @FXML
   private TextArea productionLog;
@@ -84,14 +63,13 @@ public class Controller {
   private ChoiceBox<String> chbxType;
 
   //Observable List
-  ObservableList<Product> productLine = FXCollections.observableArrayList();
+  final ObservableList<Product> productLine = FXCollections.observableArrayList();
 
-  ArrayList<ProductionRecord> productionRun = new ArrayList<>();
+  final ArrayList<ProductionRecord> productionRun = new ArrayList<>();
 
-  ArrayList<ProductionRecord> productionLog1 = new ArrayList<>();
+  final ArrayList<ProductionRecord> productionLog1 = new ArrayList<>();
 
-  ArrayList<ProductionRecord> productionLog2 = new ArrayList<>();
-
+  final ArrayList<ProductionRecord> productionLog2 = new ArrayList<>();
 
 
   final String Jdbc_Driver = "org.h2.Driver";
@@ -121,7 +99,7 @@ public class Controller {
     Product product = new Product(name, manufacturer, ItemType.valueOf(type));
 
     productLine.add(product);
-    addToProductDB();
+    addToProductDb();
     produceView.setItems(productLine);
     //This prints out info from product table view into produce tab
 
@@ -131,50 +109,49 @@ public class Controller {
 
   @FXML
   void recordProduct(ActionEvent event) throws SQLException {
-    System.out.println("Product Recorded");
+
     //prints out "product recorded" into console
 
     //This takes the selected item on the listview and grabs the info needed to make a new product
     //record
+    try {
     Product productProduced = produceView.getSelectionModel().getSelectedItem();
 
-    int tick = 1;
+
+    int productTally = 1;
 
     for (ProductionRecord productionRecord : productionLog2) {
 
       for (int k = 0; k < productLine.toArray().length; k++) {
 
-        if (productLine.get(k).getId() == productionRecord.getProductID()
-            && productProduced.getName() == productLine.get(k).getName()) {
-          tick++;
+        if (productLine.get(k).getId() == productionRecord.getProductId()
+            && productProduced.getName().equals(productLine.get(k).getName())) {
+          productTally++;
         }
 
       }
     }
 
-
-
-
-
-
-
-
     int quantity = Integer.parseInt(cmbProduce.getValue());
 
     //For loop takes input from combobox and uses that to determine how many products were made.
-    try {
-      for (int j = tick; j < tick + quantity; j++) {
+
+      for (int j = productTally; j < productTally + quantity; j++) {
         //Prints out products onto text area using ProductionRecords tostring method.
-        ProductionRecord productRec = new ProductionRecord(productProduced,j);
+        ProductionRecord productRec = new ProductionRecord(productProduced, j);
         productionRun.add(productRec);
 
       }
-      addToProductionDB();
+      addToProductionDb();
+      System.out.println("Product Recorded");
       productionRun.clear();
     } catch (NullPointerException e) {
       System.out.println("Please pick product");
+    } catch (NumberFormatException e) {
+      System.out.println("Input number please");
     }
-    loadProductionDB();
+    loadProductionDb();
+
 
 
   }
@@ -202,7 +179,7 @@ public class Controller {
     loadProductList();
     setupProductLineTable();
     produceView.setItems(productLine);
-    loadProductionDB();
+    loadProductionDb();
 
 
   }
@@ -216,25 +193,36 @@ public class Controller {
    */
 
 
-  public void addToProductDB() {
+  public void addToProductDb() {
 
-    String product = productName.getText();
-    //used to get product name from text box
+      String product = productName.getText();
+      //used to get product name from text box
 
-    System.out.println(product);
-    // used to print out product
+      System.out.println(product);
+      // used to print out product
 
-    String manufacturer = manufactureName.getText();
-    //used to get manufacturer name from textbox
+      String manufacturer = manufactureName.getText();
+      //used to get manufacturer name from textbox
 
-    System.out.println(manufacturer);
-    //used to print out manufacturer
+      System.out.println(manufacturer);
+      //used to print out manufacturer
 
-    String type = chbxType.getValue();
-    //used to get type from choice box
+      String type = chbxType.getValue();
+      //used to get type from choice box
 
-    System.out.println(type);
-    //prints out type from choicebox
+      System.out.println(type);
+      //prints out type from choicebox
+    try {
+      if (productName.getText().isEmpty() || manufactureName.getText().isEmpty()) {
+        throw new RuntimeException();
+
+      }
+    } catch (RuntimeException e) {
+      System.out.println("Text inputs are blank");
+      return;
+    }
+
+
 
     try {
       // STEP 1: Register JDBC driver
@@ -259,11 +247,9 @@ public class Controller {
       // STEP 4: Clean-up environment
       ps.close();
 
-    } catch (ClassNotFoundException e) {
+    } catch (ClassNotFoundException | SQLException e) {
       e.printStackTrace();
 
-    } catch (SQLException e) {
-      e.printStackTrace();
     }
   }
 
@@ -303,7 +289,7 @@ public class Controller {
 
   }
 
-  public void loadProductionDB() {
+  public void loadProductionDb() {
     try {
       //STEP 1: Open a connection
       conn = DriverManager.getConnection(Db_Url, User, Pass);
@@ -339,7 +325,7 @@ public class Controller {
   }
 
 
-  public void addToProductionDB() {
+  public void addToProductionDb() {
     try {
       // STEP 1: Register JDBC driver
       Class.forName(Jdbc_Driver);
@@ -350,19 +336,19 @@ public class Controller {
       stmt = conn.createStatement();
       //STEP 3: Execute a query
       String insertSql;
-      for (int i = 0; i < productionRun.size(); i++) {
+      for (ProductionRecord productionRecord : productionRun) {
 
         insertSql = "INSERT INTO ProductionRecord(product_id,serial_num,date_produced) "
             + "VALUES (?, ?, ? )";
         //sql statement used to add into product table
-        java.sql.Date sDate = new java.sql.Date(productionRun.get(i).getProdDate().getTime());
+        Date sDate = new Date(productionRecord.getProdDate().getTime());
 
         PreparedStatement ps = conn.prepareStatement(insertSql);
 
         //To Do: Work on serial Number.
 
-        ps.setInt(1, productionRun.get(i).getProductID());
-        ps.setString(2, productionRun.get(i).getSerialNum());
+        ps.setInt(1, productionRecord.getProductId());
+        ps.setString(2, productionRecord.getSerialNum());
         ps.setDate(3, sDate);
 
         ps.executeUpdate();
@@ -372,11 +358,9 @@ public class Controller {
         ps.close();
 
       }
-    } catch (ClassNotFoundException e) {
+    } catch (ClassNotFoundException | SQLException e) {
       e.printStackTrace();
 
-    } catch (SQLException e) {
-      e.printStackTrace();
     }
   }
 
@@ -399,28 +383,26 @@ public class Controller {
 
   public void showProduction() {
 
-
-    for (int j = 0; j < productionLog1.size(); j++) {
+    for (ProductionRecord productionRecord : productionLog1) {
 
       for (int k = 0; k < productLine.toArray().length; k++) {
 
-        if (productLine.get(k).getId() == productionLog1.get(j).getProductID())
-
-        productionLog.appendText(
-            "Prod. Num: " + productionLog1.get(j).productionNumber + " Product Name: "
-                + productLine.get(k).getName() +
-                " Serial Num: " + productionLog1.get(j).getSerialNum() + " Date: "
-                + productionLog1
-                .get(j).getProdDate() + '\n');
-        {
-
+        if (productLine.get(k).getId() == productionRecord.getProductId()) {
+          productionLog.appendText(
+              "Prod. Num: " + productionRecord.productionNumber + " Product Name: "
+                  + productLine.get(k).getName()
+                  + " Serial Num: " + productionRecord.getSerialNum() + " Date: "
+                  + productionRecord.getProdDate() + '\n');
         }
+
       }
     }
+
     productionLog1.clear();
     //Deletes the productionLog1 list so it doesnt duplicate list again.
   }
 }
+
 
 
 

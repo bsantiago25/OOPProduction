@@ -1,15 +1,15 @@
-class AudioPlayer extends Product implements MultimediaControl{
-  String supportedAudioFormats;
-  String supportedPlaylistFormats;
+class AudioPlayer extends Product implements MultimediaControl {
+  final String supportedAudioFormats;
+  final String supportedPlaylistFormats;
 
 
 
-  public AudioPlayer(String name, String manufacturer,String SupportedAudioFormats,String SupportedPlaylistFormats)
-  {
+  public AudioPlayer(String name, String manufacturer, String supportedAudioFormats,
+      String supportedPlaylistFormats) {
 
-    super(name, manufacturer,ItemType.AUDIO);
-    this.supportedAudioFormats = SupportedAudioFormats;
-    this.supportedPlaylistFormats = SupportedPlaylistFormats;
+    super(name, manufacturer, ItemType.AUDIO);
+    this.supportedAudioFormats = supportedAudioFormats;
+    this.supportedPlaylistFormats = supportedPlaylistFormats;
   }
 
 
@@ -17,8 +17,7 @@ class AudioPlayer extends Product implements MultimediaControl{
     System.out.println("Playing");
   }
 
-  public void stop()
-  {
+  public void stop() {
     System.out.println("Stopping");
   }
 
@@ -27,7 +26,7 @@ class AudioPlayer extends Product implements MultimediaControl{
     System.out.println("Previous");
   }
 
-  public void next(){
+  public void next() {
     System.out.println("Next");
   }
 
@@ -35,11 +34,11 @@ class AudioPlayer extends Product implements MultimediaControl{
   @Override
   public String toString() {
     return
-        "Name = " + getName() + "\n" +
-            "Manufacturer = " + getManufacturer() + "\n" +
-            "Type = " +ItemType.AUDIO + "\n" +
-            "supportedAudioFormats = " + supportedAudioFormats + "\n" +
-            "supportedPlaylistFormats = " + supportedPlaylistFormats;
+        "Name = " + getName() + "\n"
+            + "Manufacturer = " + getManufacturer() + "\n"
+            + "Type = " + ItemType.AUDIO + "\n"
+            + "supportedAudioFormats = " + supportedAudioFormats + "\n"
+            + "supportedPlaylistFormats = " + supportedPlaylistFormats;
 
   }
 }
