@@ -66,31 +66,28 @@
     </Tab>
     <Tab text="Employee">
       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-        <GridPane layoutX="76.0" layoutY="50.0" prefHeight="156.0" prefWidth="327.0">
+        <GridPane layoutX="76.0" layoutY="13.0" prefHeight="137.0" prefWidth="327.0">
           <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="158.66668701171875" minWidth="10.0"
-              prefWidth="92.66668701171875"/>
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="264.0" minWidth="10.0"
-              prefWidth="235.33331298828125"/>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="158.66668701171875" minWidth="10.0" prefWidth="107.66664632161458" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="264.0" minWidth="10.0" prefWidth="219.00002034505212" />
           </columnConstraints>
           <rowConstraints>
-            <RowConstraints maxHeight="80.33334350585938" minHeight="10.0"
-              prefHeight="80.33334350585938" vgrow="SOMETIMES"/>
-            <RowConstraints maxHeight="106.33331298828125" minHeight="10.0"
-              prefHeight="89.66665649414062" vgrow="SOMETIMES"/>
-            <RowConstraints maxHeight="106.33331298828125" minHeight="10.0"
-              prefHeight="89.66665649414062" vgrow="SOMETIMES"/>
+            <RowConstraints maxHeight="80.33334350585938" minHeight="10.0" prefHeight="80.33334350585938" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="106.33331298828125" minHeight="10.0" prefHeight="89.66665649414062" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="106.33331298828125" minHeight="10.0" prefHeight="89.66665649414062" vgrow="SOMETIMES" />
           </rowConstraints>
           <children>
-            <TextField GridPane.columnIndex="1"/>
-            <Label text="Name:"/>
-            <Label text="Password" GridPane.rowIndex="1"/>
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="1"/>
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="2"/>
-            <Label text="Email" GridPane.rowIndex="2"/>
+            <TextField fx:id="empName" GridPane.columnIndex="1" />
+            <Label text="Name:" />
+            <Label text="Password:" GridPane.rowIndex="1" />
+            <TextField fx:id="empPassword" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Label text="Username (sign-In):" GridPane.rowIndex="2" />
+                  <TextField fx:id="usernameText" GridPane.columnIndex="1" GridPane.rowIndex="2" />
           </children>
         </GridPane>
-        <Button layoutX="201.0" layoutY="268.0" mnemonicParsing="false" text="Create"/>
+        <Button fx:id="empCreate" layoutX="25.0" layoutY="300.0" mnemonicParsing="false" onAction="#makeEmployee" text="Create Account" />
+            <TextArea fx:id="empTextArea" layoutX="14.0" layoutY="155.0" prefHeight="135.0" prefWidth="435.0" />
+            <Button fx:id="signInButton" layoutX="377.0" layoutY="300.0" mnemonicParsing="false" onAction="#signIn" text="Sign-In" />
       </AnchorPane>
     </Tab>
   </TabPane>

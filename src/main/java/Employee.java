@@ -14,7 +14,7 @@ public class Employee {
       setEmail(name);
     } else {
       userName = "default";
-      email = "user@oracleacademy.Test";
+      email = "user@oracleacademy.test";
     }
     if (isValidPassword(password) == true) {
 
@@ -42,7 +42,7 @@ public class Employee {
     for (int i = 0; i < name.length(); i++) {
       if (name.charAt(i) == ' ') {
         this.email = name.substring(0, i).toLowerCase() + "."
-            + name.substring(i + 1).toLowerCase() + "@oracleacademy.Test";
+            + name.substring(i + 1).toLowerCase() + "@oracleacademy.test";
 
       }
     }

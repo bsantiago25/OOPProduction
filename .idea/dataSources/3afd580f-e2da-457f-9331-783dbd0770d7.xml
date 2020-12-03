@@ -184,45 +184,64 @@
       <CacheSize>32</CacheSize>
       <AutoCreated>1</AutoCreated>
     </sequence>
-    <table id="165" parent="4" name="PRODUCT">
+    <table id="165" parent="4" name="EMPLOYEE">
+      <ObjectId>7</ObjectId>
+    </table>
+    <table id="166" parent="4" name="PRODUCT">
       <ObjectId>5</ObjectId>
     </table>
-    <table id="166" parent="4" name="PRODUCTIONRECORD">
+    <table id="167" parent="4" name="PRODUCTIONRECORD">
       <ObjectId>3</ObjectId>
     </table>
-    <column id="167" parent="165" name="ID">
-      <Position>1</Position>
-      <DataType>INT|0s</DataType>
-      <NotNull>1</NotNull>
-      <SequenceIdentity>null</SequenceIdentity>
-    </column>
     <column id="168" parent="165" name="NAME">
+      <Position>1</Position>
+      <DataType>VARCHAR|0s</DataType>
+    </column>
+    <column id="169" parent="165" name="USERNAME">
       <Position>2</Position>
       <DataType>VARCHAR|0s</DataType>
     </column>
-    <column id="169" parent="165" name="TYPE">
+    <column id="170" parent="165" name="PASSWORD">
       <Position>3</Position>
       <DataType>VARCHAR|0s</DataType>
     </column>
-    <column id="170" parent="165" name="MANUFACTURER">
+    <column id="171" parent="165" name="EMAIL">
       <Position>4</Position>
       <DataType>VARCHAR|0s</DataType>
     </column>
-    <column id="171" parent="166" name="PRODUCTION_NUM">
+    <column id="172" parent="166" name="ID">
       <Position>1</Position>
       <DataType>INT|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="172" parent="166" name="PRODUCT_ID">
+    <column id="173" parent="166" name="NAME">
       <Position>2</Position>
-      <DataType>INT|0s</DataType>
+      <DataType>VARCHAR|0s</DataType>
     </column>
-    <column id="173" parent="166" name="SERIAL_NUM">
+    <column id="174" parent="166" name="TYPE">
       <Position>3</Position>
       <DataType>VARCHAR|0s</DataType>
     </column>
-    <column id="174" parent="166" name="DATE_PRODUCED">
+    <column id="175" parent="166" name="MANUFACTURER">
+      <Position>4</Position>
+      <DataType>VARCHAR|0s</DataType>
+    </column>
+    <column id="176" parent="167" name="PRODUCTION_NUM">
+      <Position>1</Position>
+      <DataType>INT|0s</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>null</SequenceIdentity>
+    </column>
+    <column id="177" parent="167" name="PRODUCT_ID">
+      <Position>2</Position>
+      <DataType>INT|0s</DataType>
+    </column>
+    <column id="178" parent="167" name="SERIAL_NUM">
+      <Position>3</Position>
+      <DataType>VARCHAR|0s</DataType>
+    </column>
+    <column id="179" parent="167" name="DATE_PRODUCED">
       <Position>4</Position>
       <DataType>DATETIME|0s</DataType>
     </column>

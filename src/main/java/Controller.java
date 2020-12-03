@@ -17,6 +17,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
@@ -62,7 +63,26 @@ public class Controller {
   @FXML
   private ChoiceBox<String> chbxType;
 
-  //Observable List
+  @FXML
+  private TextField empName;
+
+  @FXML
+  private TextField empPassword;
+
+  @FXML
+  private TextField usernameText;
+
+  @FXML
+  private Button empCreate;
+
+  @FXML
+  private Button signInButton;
+
+  @FXML
+  private TextArea empTextArea;
+
+
+  //Global Instances to help with functionality of project
   final ObservableList<Product> productLine = FXCollections.observableArrayList();
 
   final ArrayList<ProductionRecord> productionRun = new ArrayList<>();
@@ -70,6 +90,9 @@ public class Controller {
   final ArrayList<ProductionRecord> productionLog1 = new ArrayList<>();
 
   final ArrayList<ProductionRecord> productionLog2 = new ArrayList<>();
+
+
+
 
 
   final String Jdbc_Driver = "org.h2.Driver";
@@ -156,6 +179,16 @@ public class Controller {
 
   }
 
+  @FXML
+  void makeEmployee(ActionEvent event) {
+    addEmployeeDb();
+  }
+
+  @FXML
+  void signIn(ActionEvent event) {
+    signInEmployee();
+  }
+
   /**
    * This method initializes the combobox to make a total types of 1-10.
    */
@@ -175,6 +208,10 @@ public class Controller {
     }
     //Selects first option for itemtype
     chbxType.getSelectionModel().selectFirst();
+
+    empTextArea.setEditable(false);
+
+    productionLog.setEditable(false);
 
     loadProductList();
     setupProductLineTable();
@@ -345,7 +382,7 @@ public class Controller {
 
         PreparedStatement ps = conn.prepareStatement(insertSql);
 
-        //To Do: Work on serial Number.
+
 
         ps.setInt(1, productionRecord.getProductId());
         ps.setString(2, productionRecord.getSerialNum());
@@ -401,7 +438,121 @@ public class Controller {
     productionLog1.clear();
     //Deletes the productionLog1 list so it doesnt duplicate list again.
   }
+
+ public void addEmployeeDb() {
+    try {
+     // STEP 1: Register JDBC driver
+      Class.forName(Jdbc_Driver);
+
+      //STEP 2: Open a connection
+      conn = DriverManager.getConnection(Db_Url, User, Pass);
+
+      stmt = conn.createStatement();
+      //STEP 3: Execute a query
+      String insertSql;
+
+      //clears textarea for employee
+      empTextArea.clear();
+
+      String name = empName.getText();
+
+      String password = empPassword.getText();
+      try {
+
+        if (empName.getText().isEmpty()) {
+
+          empTextArea.clear();
+          empTextArea.appendText("Input Name please.");
+          throw new RuntimeException();
+
+        }
+      }catch (RuntimeException e) {
+
+       return;
+
+      }
+
+      Employee employee = new Employee(name,password);
+
+      empTextArea.appendText(employee.toString());
+
+      insertSql = "INSERT INTO Employee(name, username, password, email) "
+          + "VALUES (?, ?, ?, ? )";
+
+      PreparedStatement ps = conn.prepareStatement(insertSql);
+
+      ps.setString(1, employee.name);
+      ps.setString(2, employee.userName);
+      ps.setString(3, employee.password);
+      ps.setString(4, employee.email);
+
+        ps.executeUpdate();
+        //Used to execute sql statement.
+
+        // STEP 4: Clean-up environment
+        ps.close();
+
+
+
+    } catch (ClassNotFoundException | SQLException e) {
+      e.printStackTrace();
+
+    }
+  }
+
+  public void signInEmployee() {
+    ArrayList<Employee> employees = new ArrayList<>();
+
+
+    try {
+      //STEP 1: Open a connection
+      conn = DriverManager.getConnection(Db_Url, User, Pass);
+      //Create statement
+      stmt = conn.createStatement();
+      String reader3 = "SELECT * FROM Employee";
+      //STEP 3: Execute a query
+      ResultSet looker3 = stmt.executeQuery(reader3);
+      //Clears Tableview to input new Tab
+
+
+      while (looker3.next()) {
+
+        // Reads from database
+        String name = looker3.getString("name");
+        String password = looker3.getString("password");
+        // create Employee Object
+        Employee employee = new Employee(name, password);
+        employees.add(employee);
+
+      }
+      looker3.close();
+
+      String username = usernameText.getText();
+
+      String password = empPassword.getText();
+
+      for (Employee employee : employees) {
+        if (employee.userName.equals(username) && employee.password.equals(password)) {
+          empTextArea.clear();
+          empTextArea.appendText("Welcome back! " + employee.name + ".");
+
+        } else {
+          empTextArea.clear();
+          empTextArea.appendText("Incorrect username or password.");
+        }
+      }
+
+    } catch (SQLException se) {
+      se.printStackTrace();
+      Alert a = new Alert(AlertType.ERROR);
+
+      a.show();
+    }
+
+  }
+
 }
+
 
 
 
