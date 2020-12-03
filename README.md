@@ -2,8 +2,7 @@
 
 
 ## Demonstration
-![Alt text]()
-
+![Alt text](relative/path/to/img.png)
 ## Documentation
 
 
