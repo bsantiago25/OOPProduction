@@ -2,9 +2,7 @@
 
 
 ## Demonstration
-![Alt text](relative/path/to/img.png)
-## Documentation
-
+![Alt text](https://github.com/bsantiago25/OOPProduction/blob/master/8NUOqtVaw3.gif)
 
 ## Diagrams
 
