@@ -1,3 +1,7 @@
+/**
+ * This is the interface for item.
+ * @author Brandon Santiago
+ */
 public interface Item {
 
   int getId();

@@ -1,3 +1,10 @@
+/**
+ * This is the class that makes employees.
+ * Takes in name, and password and makes a whole new
+ * account for them.
+ * @author Brandon Santiago
+ */
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -25,6 +32,10 @@ public class Employee {
     }
   }
 
+  /**
+   * This method sets the new username for employee.
+   * @param name takes name of employee
+   */
   private void setUserName(String name) {
     char firstInitial = name.charAt(0);
     firstInitial = Character.toLowerCase(firstInitial);
@@ -35,6 +46,11 @@ public class Employee {
       }
     }
   }
+
+  /**
+   * Makes a new email for new employee.
+   * @param name takes the name of employee.
+   */
 
   private void setEmail(String name) {
 
@@ -48,6 +64,12 @@ public class Employee {
     }
   }
 
+  /**
+   * This method checks to see if there is a white space in
+   * the employee name. This helps separate first and last names.
+   * @param name name of employee
+   * @return true if there is whitespace, false if there isn't.
+   */
   private boolean checkName(String name) {
     for (int i = 0; i < name.length(); i++) {
       if (name.charAt(i) == ' ') {
@@ -57,6 +79,11 @@ public class Employee {
     return false;
   }
 
+  /**
+   * This method checks to see if the password is valid.
+   * @param password takes employees password
+   * @return true if the password is valid, false if it isn't.
+   */
   private boolean isValidPassword(String password) {
     Pattern p = Pattern.compile("([a-z])([A-Z])(?=.*[\\W])");
     Matcher m = p.matcher(password);
@@ -68,8 +95,10 @@ public class Employee {
   }
 
 
-
-
+  /**
+   * This prints all employees details
+   * @return employee details.
+   */
   @Override
   public String toString() {
     return "Employee Details" + '\n'

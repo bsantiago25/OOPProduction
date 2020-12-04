@@ -1,7 +1,10 @@
-//Programmer name: Brandon Santiago
-//This file is the controller.java file and contains and contains all SQL codes and
-//most of the coding for this program.
-//Date: 9/19/2020
+/**
+
+ * This is the controller class for my project.
+ * Contains all the methods needed for the program to function.
+  * @author Brandon Santiago
+
+ */
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -28,6 +31,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 
+
 public class Controller {
 
   @FXML
@@ -35,6 +39,12 @@ public class Controller {
 
   @FXML
   private TableView<Product> productTable;
+
+  @FXML
+  private TextField messageProduce;
+
+  @FXML
+  private TextField messageProductLine;
 
   @FXML
   private TableColumn<?, ?> prodID;
@@ -103,33 +113,27 @@ public class Controller {
   final String Pass = "";
 
 
+  /**
+   * A button method that activates another method that connects to
+   * database.
+   * @param event this is just the event for add product.
+   */
   @FXML
   void addProduct(ActionEvent event) throws SQLException {
-
-    //calls connectToDb method when add product button is pushed.
-
-    System.out.println("Product added");
-    String name = productName.getText();
-    //used to get product name from text box
-
-    String manufacturer = manufactureName.getText();
-    //used to get manufacturer name from textbox
-
-    String type = chbxType.getValue();
-    //used to get type from choice box
-
-    //adds info to observablelist called productline and adds that into tableview
-    Product product = new Product(name, manufacturer, ItemType.valueOf(type));
-
-    productLine.add(product);
+    //When add product button is pushed, connects to database to add product.
     addToProductDb();
     produceView.setItems(productLine);
     //This prints out info from product table view into produce tab
 
     loadProductList();
+    //loads the product list
 
   }
 
+  /**
+   * A button method for recording product.
+   * @param event this is just the event for record product
+   */
   @FXML
   void recordProduct(ActionEvent event) throws SQLException {
 
@@ -143,6 +147,7 @@ public class Controller {
 
     int productTally = 1;
 
+    //This is done to keep tallies on the amount of products that are already in product list.
     for (ProductionRecord productionRecord : productionLog2) {
 
       for (int k = 0; k < productLine.toArray().length; k++) {
@@ -155,43 +160,56 @@ public class Controller {
       }
     }
 
+    //This is used to allow any number besides the one given as default.
     int quantity = Integer.parseInt(cmbProduce.getValue());
 
     //For loop takes input from combobox and uses that to determine how many products were made.
 
       for (int j = productTally; j < productTally + quantity; j++) {
-        //Prints out products onto text area using ProductionRecords tostring method.
         ProductionRecord productRec = new ProductionRecord(productProduced, j);
         productionRun.add(productRec);
 
       }
       addToProductionDb();
-      System.out.println("Product Recorded");
+      messageProduce.clear();
+      messageProduce.appendText("Product Recorded");
       productionRun.clear();
     } catch (NullPointerException e) {
-      System.out.println("Please pick product");
+
+      messageProduce.clear();
+      messageProduce.appendText("Pick Produce Please");
+
     } catch (NumberFormatException e) {
-      System.out.println("Input number please");
+      messageProduce.clear();
+      messageProduce.appendText("Input a number please.");
     }
-    loadProductionDb();
+    loadProductionLog();
+
+    //The catches are there in case the user uses the wrong input.
 
 
 
   }
 
+  /**
+   * This is the method for creating an employee.
+   * @param event this is the event for creating employee.
+   */
   @FXML
   void makeEmployee(ActionEvent event) {
     addEmployeeDb();
   }
 
+  /**
+   * This is the method for signing in an employee.
+   * @param event this is the event for signing in employee
+   */
   @FXML
   void signIn(ActionEvent event) {
     signInEmployee();
   }
 
-  /**
-   * This method initializes the combobox to make a total types of 1-10.
-   */
+
   public void initialize() throws SQLException {
 
     for (int i = 1; i <= 10; i++) {
@@ -210,13 +228,13 @@ public class Controller {
     chbxType.getSelectionModel().selectFirst();
 
     empTextArea.setEditable(false);
-
     productionLog.setEditable(false);
+    //Prevents the textarea from being editable.
 
     loadProductList();
     setupProductLineTable();
     produceView.setItems(productLine);
-    loadProductionDb();
+    loadProductionLog();
 
 
   }
@@ -226,38 +244,36 @@ public class Controller {
 
 
   /**
-   * This method initializes the program to connect to database and populate it with data.
+   * This method is the method used for adding products into the
+   * database. It's linked with the button for adding products.
    */
-
-
   public void addToProductDb() {
 
       String product = productName.getText();
       //used to get product name from text box
 
-      System.out.println(product);
-      // used to print out product
-
       String manufacturer = manufactureName.getText();
       //used to get manufacturer name from textbox
-
-      System.out.println(manufacturer);
-      //used to print out manufacturer
 
       String type = chbxType.getValue();
       //used to get type from choice box
 
-      System.out.println(type);
-      //prints out type from choicebox
+
+
+    //Try is used to reset this button press in case nothing was inputted.
     try {
       if (productName.getText().isEmpty() || manufactureName.getText().isEmpty()) {
         throw new RuntimeException();
 
       }
     } catch (RuntimeException e) {
-      System.out.println("Text inputs are blank");
+      messageProductLine.clear();
+      messageProductLine.appendText("Text inputs are blank.");
       return;
     }
+
+    messageProductLine.clear();
+    messageProductLine.appendText("Product Added");
 
 
 
@@ -290,30 +306,41 @@ public class Controller {
     }
   }
 
+  /**
+   * This is the method that connects to database to load the product table.
+   */
   private void loadProductList() {
     try {
       //STEP 1: Open a connection
       conn = DriverManager.getConnection(Db_Url, User, Pass);
       //Create statement
       stmt = conn.createStatement();
+
+      //Reader is used to go through the database
       String reader = "SELECT * FROM Product";
       //STEP 3: Execute a query
-      ResultSet looker = stmt.executeQuery(reader);
+      ResultSet Writer = stmt.executeQuery(reader);
+      //Writer is used to write in info from the database into an object.
+
       //Clears Tableview to input new Table
       produceView.getItems().clear();
-      while (looker.next()) {
-        // these lines correspond to the database table columns
-        //Reads from database
-        int id = looker.getInt("id");
-        String name = looker.getString("name");
-        String type = looker.getString("type");
-        String manufacturer = looker.getString("manufacturer");
+      while (Writer.next()) {
+
+        int id = Writer.getInt("id");
+
+        String name = Writer.getString("name");
+
+        String type = Writer.getString("type");
+
+        String manufacturer = Writer.getString("manufacturer");
         // create Product Object
         Product productFromDb = new Product(id, name, manufacturer, ItemType.valueOf(type));
 
         productLine.add(productFromDb);
       }
-      looker.close();
+
+      Writer.close();
+
     } catch (SQLException se) {
       se.printStackTrace();
       Alert a = new Alert(AlertType.ERROR);
@@ -321,38 +348,40 @@ public class Controller {
       a.show();
     } catch (Exception e) {
       e.printStackTrace();
-      System.out.println("This is where the error is");
-    }
+      }
 
   }
 
-  public void loadProductionDb() {
+  /**
+   * This is the method for loading up the production log.
+   */
+  public void loadProductionLog() {
     try {
       //STEP 1: Open a connection
       conn = DriverManager.getConnection(Db_Url, User, Pass);
       //Create statement
       stmt = conn.createStatement();
-      String reader2 = "SELECT * FROM Productionrecord";
-      //STEP 3: Execute a query
-      ResultSet looker2 = stmt.executeQuery(reader2);
-      productionLog2.clear();
-      //Clears Tableview to input new Table
 
-      while (looker2.next()) {
-        // these lines correspond to the database table columns
-        //Reads from database
-        int pNum = looker2.getInt("production_num");
-        int pId = looker2.getInt("product_id");
-        String sNum = looker2.getString("serial_num");
-        Date dProduced = looker2.getDate("date_produced");
-        // create Product Object
+      String reader = "SELECT * FROM Productionrecord";
+
+      //STEP 3: Execute a query
+      ResultSet writer = stmt.executeQuery(reader);
+      productionLog2.clear();
+      //Clears productionLog2.
+
+      while (writer.next()) {
+        int pNum = writer.getInt("production_num");
+        int pId = writer.getInt("product_id");
+        String sNum = writer.getString("serial_num");
+        Date dProduced = writer.getDate("date_produced");
+        // create ProductionRecord Object
         ProductionRecord productionRecordFromDb = new ProductionRecord(pNum, pId, sNum, dProduced);
         productionLog1.add(productionRecordFromDb);
         productionLog2.add(productionRecordFromDb);
       }
       productionLog.clear();
       showProduction();
-      looker2.close();
+      writer.close();
     } catch (SQLException se) {
       se.printStackTrace();
       Alert a = new Alert(AlertType.ERROR);
@@ -361,7 +390,10 @@ public class Controller {
     }
   }
 
-
+  /**
+   * This is the method for adding production into the database.
+   * This is linked with the record production button.
+   */
   public void addToProductionDb() {
     try {
       // STEP 1: Register JDBC driver
@@ -401,7 +433,9 @@ public class Controller {
     }
   }
 
-  //This table is designed to get text from user input and record them into product table
+  /**
+   * This loads up the product line table.
+   */
   public void setupProductLineTable() {
 
     prodID.setCellValueFactory(new PropertyValueFactory("id"));
@@ -418,12 +452,19 @@ public class Controller {
     productTable.setItems(productLine);
   }
 
+  /**
+   * This shows the production log in the textfield for produce.
+   */
   public void showProduction() {
 
+    //Goes through an arraylist that has the updated list of produced products.
     for (ProductionRecord productionRecord : productionLog1) {
 
+      //Goes through productLine to look for matching Product ID
       for (int k = 0; k < productLine.toArray().length; k++) {
 
+        //If all the properties match, Gets the name and prints it out into
+        //the production Text Field.
         if (productLine.get(k).getId() == productionRecord.getProductId()) {
           productionLog.appendText(
               "Prod. Num: " + productionRecord.productionNumber + " Product Name: "
@@ -439,6 +480,10 @@ public class Controller {
     //Deletes the productionLog1 list so it doesnt duplicate list again.
   }
 
+  /**
+   * This is the method for adding employees into the database.
+   * It is linked with create button in employees tab.
+   */
  public void addEmployeeDb() {
     try {
      // STEP 1: Register JDBC driver
@@ -457,8 +502,10 @@ public class Controller {
       String name = empName.getText();
 
       String password = empPassword.getText();
-      try {
 
+      try {
+        //Determines if the empName text field is empty
+        //Throws an exception so the button doesn't continue with function
         if (empName.getText().isEmpty()) {
 
           empTextArea.clear();
@@ -500,7 +547,14 @@ public class Controller {
     }
   }
 
+  /**
+   * This is the method for signing in employees.
+   * It is linked with the sign-in button in the employees
+   * tab.
+   */
   public void signInEmployee() {
+   //Creates an arraylist so if employee signs in, it will see if
+    // they're in database.
     ArrayList<Employee> employees = new ArrayList<>();
 
 
@@ -509,28 +563,29 @@ public class Controller {
       conn = DriverManager.getConnection(Db_Url, User, Pass);
       //Create statement
       stmt = conn.createStatement();
-      String reader3 = "SELECT * FROM Employee";
+      String reader = "SELECT * FROM Employee";
       //STEP 3: Execute a query
-      ResultSet looker3 = stmt.executeQuery(reader3);
-      //Clears Tableview to input new Tab
+      ResultSet writer = stmt.executeQuery(reader);
 
 
-      while (looker3.next()) {
+
+      while (writer.next()) {
 
         // Reads from database
-        String name = looker3.getString("name");
-        String password = looker3.getString("password");
+        String name = writer.getString("name");
+        String password = writer.getString("password");
         // create Employee Object
         Employee employee = new Employee(name, password);
         employees.add(employee);
 
       }
-      looker3.close();
+      writer.close();
 
       String username = usernameText.getText();
 
       String password = empPassword.getText();
 
+      //this ensures that the employee put in the correct credentials.
       for (Employee employee : employees) {
         if (employee.userName.equals(username) && employee.password.equals(password)) {
           empTextArea.clear();

@@ -1,3 +1,7 @@
+/**
+ * This is the class for screens for products that are tv's.
+ * @author Brandon Santiago
+ */
 class Screen implements ScreenSpec {
 
   final String resolution;
@@ -10,22 +14,38 @@ class Screen implements ScreenSpec {
     this.responseTime = responseTime;
   }
 
+  /**
+   * This method gets the resolution of screen.
+   * @return screen resolution.
+   */
   @Override
   public String getResolution() {
     return resolution;
   }
 
+  /**
+   * This gets the refresh rate of a monitor.
+   * @return refresh rate of monitor.
+   */
   @Override
   public int getRefreshRate() {
     return refreshRate;
   }
 
+  /**
+   * This gets the response time of the monitor.
+   * @return response rate of monitor.
+   */
   @Override
   public int getResponseTime() {
     return responseTime;
   }
 
-
+  /**
+   * This is the toString for this class and just returns details
+   * of the monitor.
+   * @return all details of monitor.
+   */
   @Override
   public String toString() {
     return "Screen: " + '\n'

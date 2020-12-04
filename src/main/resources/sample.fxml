@@ -40,14 +40,15 @@
         </GridPane>
         <Button fx:id="btnAddProduct" layoutX="107.0" layoutY="100.0" mnemonicParsing="false" onAction="#addProduct" text="Add Product" />
         <Label layoutY="125.0" text="Existing Products" />
-        <TableView fx:id="productTable" layoutX="107.0" layoutY="134.0" prefHeight="205.0" prefWidth="345.0">
+        <TableView fx:id="productTable" layoutX="7.0" layoutY="155.0" prefHeight="196.0" prefWidth="452.0">
           <columns>
             <TableColumn fx:id="prodID" prefWidth="75.0" text="Product ID" />
             <TableColumn fx:id="prodName" prefWidth="113.33329772949219" text="Product Name" />
-            <TableColumn fx:id="mfr" prefWidth="75.0" text="Manufacturer" />
-            <TableColumn fx:id="iType" prefWidth="75.0" text="Item Type" />
+            <TableColumn fx:id="mfr" prefWidth="109.33335876464844" text="Manufacturer" />
+            <TableColumn fx:id="iType" prefWidth="152.6666259765625" text="Item Type" />
           </columns>
         </TableView>
+            <TextField fx:id="messageProductLine" editable="false" layoutX="223.0" layoutY="121.0" prefHeight="25.0" prefWidth="228.0" />
       </AnchorPane>
     </Tab>
     <Tab fx:id="tab2" text="Produce">
@@ -57,6 +58,7 @@
         <ComboBox fx:id="cmbProduce" editable="true" layoutX="150.0" layoutY="187.0" prefWidth="150.0" />
         <Label layoutX="181.0" layoutY="170.0" text="Choose Quantity" />
         <Button fx:id="btnRecordProduct" layoutX="178.0" layoutY="221.0" mnemonicParsing="false" onAction="#recordProduct" text="Record Product" />
+            <TextField fx:id="messageProduce" editable="false" layoutX="100.0" layoutY="257.0" prefHeight="17.0" prefWidth="250.0" />
       </AnchorPane>
     </Tab>
     <Tab fx:id="tab3" text="Production Log">
