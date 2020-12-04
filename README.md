@@ -6,7 +6,7 @@ Making this project was an experience. I've learned alot about OOP and this proj
 in that class. To whoever sees this, I thank you for having the time to see what I've made.
 
 ## Demonstration
-![JavaDocs](https://bsantiago25.github.io/OOPProduction/javadocs/index.html)
+[JavaDoc](https://bsantiago25.github.io/OOPProduction/javadocs/index.html)
 
 ## Diagrams
 
