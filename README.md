@@ -30,13 +30,16 @@ Contribution is greatly appreciated and if there is ways on improving my project
 ## Author
 Brandon Santiago
 
-## License
-
-
 ## Acknowledgments
+Professor Scott Vanselow for helping me with my Production Record and Jeremy Martin with the H2 database.
 
 
 ## History
 
 
 ## Key Programming Concepts Utilized
+Enums<br />
+Arraylists<br />
+Regular Expressions<br />
+SQL<br />
+Objects<br />
