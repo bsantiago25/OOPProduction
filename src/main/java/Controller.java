@@ -513,13 +513,13 @@ public class Controller {
           throw new RuntimeException();
 
         }
-      }catch (RuntimeException e) {
+      } catch (RuntimeException e) {
 
        return;
 
       }
 
-      Employee employee = new Employee(name,password);
+      Employee employee = new Employee(name, password);
 
       empTextArea.appendText(employee.toString());
 

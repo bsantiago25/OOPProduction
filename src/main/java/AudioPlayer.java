@@ -2,6 +2,7 @@
  * This is the audio player class for the program.
  * Basically plays,stops, plays next track, plays previous track.
  * @author Brandon Santiago
+ *
  */
 
 class AudioPlayer extends Product implements MultimediaControl {
@@ -47,7 +48,7 @@ class AudioPlayer extends Product implements MultimediaControl {
   }
 
   /**
-   * This to string returns all the audio players info
+   * This to string returns all the audio players info.
    * @return audio player info.
    */
   @Override

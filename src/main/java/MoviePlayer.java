@@ -3,7 +3,7 @@
  * Controls playing, stopping, previous and next.
  * @author Brandon Santiago
  */
-class MoviePlayer extends Product implements MultimediaControl{
+class MoviePlayer extends Product implements MultimediaControl {
 
   final Screen screen;
   final MonitorType monitorType;
@@ -49,20 +49,20 @@ class MoviePlayer extends Product implements MultimediaControl{
   }
 
   /**
-   * This toString prints out info for movie player
+   * This toString prints out info for movie player.
    * @return Movie player info.
    */
   @Override
   public String toString() {
     return
-        "Name = " + getName() + "\n" +
-            "Manufacturer = " + getManufacturer() + "\n" +
-            "Type = " +ItemType.VISUAL + "\n" +
-            "Screen: " + '\n' +
-            "Resolution: " + screen.getResolution() + '\n' +
-            "Refresh rate: " + screen.getRefreshRate() + '\n' +
-            "Response time: " + screen.getResponseTime() + '\n' +
-            "Monitor Type: " + monitorType;
+        "Name = " + getName() + "\n"
+            + "Manufacturer = " + getManufacturer() + "\n"
+            + "Type = " + ItemType.VISUAL + "\n"
+            + "Screen: " + '\n'
+            + "Resolution: " + screen.getResolution() + '\n'
+            + "Refresh rate: " + screen.getRefreshRate() + '\n'
+            + "Response time: " + screen.getResponseTime() + '\n'
+            + "Monitor Type: " + monitorType;
 
   }
 }

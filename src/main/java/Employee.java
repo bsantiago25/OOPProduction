@@ -96,7 +96,7 @@ public class Employee {
 
 
   /**
-   * This prints all employees details
+   * This prints all employees details.
    * @return employee details.
    */
   @Override

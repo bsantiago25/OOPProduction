@@ -33,7 +33,7 @@ public class Product implements Item {
   }
 
   /**
-   * This gets the id of the product
+   * This gets the id of the product.
    * @return id of product.
    */
   public int getId() {
