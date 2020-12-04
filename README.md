@@ -16,10 +16,12 @@ in that class. To whoever sees this, I thank you for having the time to see what
 ![Alt text](classDiagramDb.JPG)
 
 ## Getting Started
-
+Just download my project from here and use your Java developing software such as Intellij
+to run it. This project does use JDK11 and H2 for the database to run however so make sure you have all that.
 
 ## Built With
-
+Intellij IDEA 2020
+Gluon Scenebuilder
 
 ## Contributing
 
