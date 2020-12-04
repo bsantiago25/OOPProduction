@@ -9,7 +9,7 @@ in that class. To whoever sees this, I thank you for having the time to see what
 ![Alt text](https://github.com/bsantiago25/OOPProduction/blob/master/4w4FmSUUr3.gif)
 
 ## Diagrams
-
+[Text to appear](https://github.com/bsantiago25/OOPProduction/tree/master/docs)
 
 ## Getting Started
 
