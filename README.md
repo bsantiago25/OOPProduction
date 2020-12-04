@@ -7,10 +7,13 @@ in that class. To whoever sees this, I thank you for having the time to see what
 
 ## Demonstration
  ![Alt text](4w4FmSUUr3.gif)
+ 
+## Documentation
+[JavaDoc](https://bsantiago25.github.io/OOPProduction/javadocs/index.html)
 
 ## Diagrams
-[JavaDoc](https://bsantiago25.github.io/OOPProduction/javadocs/index.html)
-()
+![Alt text](ClassDiagram.JPG)
+![Alt text](classDiagramDb.JPG)
 
 ## Getting Started
 
