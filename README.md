@@ -20,14 +20,15 @@ Just download my project from here and use your Java developing software such as
 to run it. This project does use JDK11 and H2 for the database to run however so make sure you have all that.
 
 ## Built With
-Intellij IDEA 2020
-Gluon Scenebuilder
+Intellij IDEA 2020<br />
+Gluon Scenebuilder<br />
+H2 Database
 
 ## Contributing
-
+Contribution is greatly appreciated and if there is ways on improving my project, try it and let me know.
 
 ## Author
-
+Brandon Santiago
 
 ## License
 
