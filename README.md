@@ -6,7 +6,7 @@ Making this project was an experience. I've learned alot about OOP and this proj
 in that class. To whoever sees this, I thank you for having the time to see what I've made.
 
 ## Demonstration
-![sample gif]
+ ![Alt text](relative/path/to/img.png)
 
 ## Diagrams
 [JavaDoc](https://bsantiago25.github.io/OOPProduction/javadocs/index.html)
