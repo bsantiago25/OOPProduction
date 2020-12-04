@@ -1,5 +1,5 @@
 # OOP Production Project
-The project is a program that keeps records of products made. The program also ulitizes databases to keep records of previous products produced.
+The project is a program that keeps records of products made. The program also ulitizes databases to keep records of previous products produced and employee accounts.
 This project was made by me and was done independently, no team was involved with the making of the program.
 This project was made as part of my semester long assignment at FGCU. The name of the class was called Object Oriented Programming.
 Making this project was an experience. I've learned alot about OOP and this project reflects all that I've learned and done during my time
