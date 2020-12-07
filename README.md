@@ -9,7 +9,7 @@ in that class. To whoever sees this, I thank you for having the time to see what
  ![Alt text](4w4FmSUUr3.gif)
  
 ## Documentation
-[JavaDoc](https://bsantiago25.githu.io/OOPProduction/javadocs/index.html)
+[JavaDoc](https://bsantiago25.github.io/OOPProduction/javadocs/index.html)
 
 ## Diagrams
 ![Alt text](ClassDiagram.JPG)
